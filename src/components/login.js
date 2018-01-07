@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
+import url from './config'
 
 class Login extends Component {
+    constructor(){
+        super()
+        this.state={message:''}
+    }
 
     loginUser = (e) =>{
         e.preventDefault();
+        const {history} = this.props;
         sessionStorage.setItem('user', this.refs.username.value)
-        fetch('http://127.0.0.1:5000/auth/login', {
+        fetch(url+'auth/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -18,6 +24,12 @@ class Login extends Component {
         .then((responseJson) => {
             console.log(responseJson);
             sessionStorage.setItem('token',responseJson.token)
+            sessionStorage.setItem('isLoggedIn',true)
+            this.setState({message:responseJson.error})
+            if(responseJson.token){
+                window.location.reload()
+                history.push('/dashboard')
+            }
         })
         .catch((error) => {
           console.error(error);
@@ -31,6 +43,10 @@ class Login extends Component {
         return (
             <div className="Login">
                 <h1>Login</h1>
+                {this.state.message
+                    ? <div className="alert alert-success col-sm-7">{this.state.message}</div>
+                    : <div></div> 
+                }
                 <form method="POST" onSubmit={this.loginUser}>
                     <div className="col-sm-6">
                         <div className="form-group">
@@ -41,7 +57,7 @@ class Login extends Component {
                             <input type="password" className="form-control" placeholder="Password" ref="password" required/>
                         </div>
                         
-                        <input type="submit" className="btn btn-primary pull-right" value="Register"/>
+                        <input type="submit" className="btn btn-primary pull-right" value="Login"/>
 
                         <center>
                             <p>or</p>

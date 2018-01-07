@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-
+import url from './config'
 class Register extends Component {
+
+    constructor(){
+        super()
+        this.state={message:''}
+    }
     regUser = (e) =>{
         e.preventDefault();
-
-        fetch('http://127.0.0.1:5000/auth/register', {
+        fetch(url+'auth/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -18,16 +22,21 @@ class Register extends Component {
         }).then((response) => response.json())
         .then((responseJson) => {
             console.log(responseJson);
+            if(responseJson.status){
+                this.setState({message:responseJson.Message})
+                this.refs.name.value=null;
+                this.refs.username.value=null;
+                this.refs.email.value=null;
+                this.refs.password.value=null;
+                this.refs.cpassword.value=null;
+            }
+            this.setState({message:responseJson.Message})
+ 
         })
         .catch((error) => {
           console.error(error);
         });
-        this.refs.message.innerHTML='You are Registered. You can now login';
-        this.refs.name.value=null;
-        this.refs.username.value=null;
-        this.refs.email.value=null;
-        this.refs.password.value=null;
-        this.refs.cpassword.value=null;
+        
         
        
     }
@@ -35,7 +44,10 @@ class Register extends Component {
         return (
         <div className="Register">
             <h1>Register Here</h1>
-            <div className="alert alert-success" ref="message"></div>
+            {this.state.message
+                    ? <div className="alert alert-success col-sm-7">{this.state.message}</div>
+                    : <div></div> 
+                }
             <form onSubmit={this.regUser}>
                 <div className="col-sm-6">
                     <div className="form-group">

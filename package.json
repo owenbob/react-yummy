@@ -5,17 +5,28 @@
   "dependencies": {
     "circular-json": "^0.3.3",
     "react": "^16.0.0",
+    "react-bootstrap": "^0.31.5",
     "react-dom": "^16.0.0",
     "react-render-html": "^0.5.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
-    "react-since": "^1.1.0"
+    "react-since": "^1.1.0",
+    "react-toastr": "^3.0.0",
+    "toastr": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "enzyme": "^3.2.0",
+    "mocha": "^4.0.1",
+    "react-addons-test-utils": "^15.6.2",
+    "react-toastr-basic": "^1.1.14",
+    "sinon": "^4.1.3"
   }
 }
