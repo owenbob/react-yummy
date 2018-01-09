@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import url from './config'
+import  url, { http } from './config'
 
 class AddCategory extends Component {
     constructor(){
@@ -14,34 +14,18 @@ class AddCategory extends Component {
         if(!sessionStorage.getItem('isLoggedIn')){
             history.push('/login')
         }
-        fetch(url+'category', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            },
-            body: JSON.stringify({
-              cat_name: this.refs.cat_name.value,
-              cat_desc: this.refs.cat_desc.value,
-            })
-        }).then((response) => response.json())
-        .then((responseJson) => {
-            if(responseJson.Message){
-                console.log(responseJson);
-                this.setState ({
-                    message:responseJson.Message
-                })
-            }
-            if (responseJson.status === 201){
-                this.refs.cat_name.value=null;
-                this.refs.cat_desc.value=null;
-                history.push('/dashboard')
-            }
-            
-            
+        let postData = {
+            cat_name: this.refs.cat_name.value,
+            cat_desc: this.refs.cat_desc.value,
+        }
+        return http.post(`${url}category`, postData)
+        .then((response) => {
+                history.push('/dashboard')   
         })
-        .catch((error) => {
-          console.error(error);
+        .catch((xhr) => {
+            this.setState ({
+                message:xhr.response.data.Message
+            })
         });
         
         
