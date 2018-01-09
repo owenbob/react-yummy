@@ -186,7 +186,7 @@ class Home extends Component {
     };
     render(){
         let loadPagination;
-        if (this.state.data) {
+        if (this.state.data[0]) {
             loadPagination =
            <div className="col-xs-3 pull-right">
                 <ul className="pagination">
