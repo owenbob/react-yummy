@@ -1,53 +1,47 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import url from './config'
 class Register extends Component {
 
     constructor(){
         super()
-        this.state={message:''}
+        this.state={
+            message:'',
+            color:'col-xs-12 alert alert-danger'
+        }
     }
     regUser = (e) =>{
         e.preventDefault();
-        fetch(url+'auth/register', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              name: this.refs.name.value,
-              username: this.refs.username.value,
-              email: this.refs.email.value,
-              password: this.refs.password.value
+        let postData = {
+            name: this.refs.name.value,
+            username: this.refs.username.value,
+            email: this.refs.email.value,
+            password: this.refs.password.value
+        };
+        return axios.post(`${url}auth/register`, postData)
+        .then((response) => {
+            this.setState({
+                message:response.data.Message,
+                color:'col-xs-12 alert alert-success'
             })
-        }).then((response) => response.json())
-        .then((responseJson) => {
-            console.log(responseJson);
-            if(responseJson.status){
-                this.setState({message:responseJson.Message})
-                this.refs.name.value=null;
-                this.refs.username.value=null;
-                this.refs.email.value=null;
-                this.refs.password.value=null;
-                this.refs.cpassword.value=null;
-            }
-            this.setState({message:responseJson.Message})
- 
+            this.refs.name.value=null;
+            this.refs.username.value=null;
+            this.refs.email.value=null;
+            this.refs.password.value=null;
+            this.refs.cpassword.value=null;
         })
-        .catch((error) => {
-          console.error(error);
-        });
-        
-        
-       
+        .catch((xhr) => {
+            this.setState({message:xhr.response.data.Message})
+        }); 
     }
     render(){
         return (
         <div className="Register">
             <h1>Register Here</h1>
             {this.state.message
-                    ? <div className="alert alert-danger col-xs-12">{this.state.message}</div>
-                    : <div></div> 
-                }
+                ? <div className={this.state.color}>{this.state.message}</div>
+                : <div></div> 
+            }
             <form onSubmit={this.regUser}>
                 <div className="jumbotron">
                     <div className="form-group">
