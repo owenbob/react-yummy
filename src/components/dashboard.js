@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Tabs, Tab, Panel, Table} from 'react-bootstrap';
+import { Tabs, Tab, Panel, Table } from 'react-bootstrap';
 import url from './config'
 
 const Recipe = props =>
@@ -36,7 +36,7 @@ class Dashboard extends Component {
       }
     
     componentDidMount(){
-        const {history} = this.props;
+        const { history } = this.props;
         if(!sessionStorage.getItem('isLoggedIn')){
             return history.push('/login')
         }
@@ -54,8 +54,8 @@ class Dashboard extends Component {
                 this.setState({
                     data: findresponse.Recipe_list,
                     showMessage:false
-                    });
-                    console.log(findresponse.Recipe_list)
+                });
+                console.log(findresponse.Recipe_list)
             }  
         })
         console.log("######get request end")
@@ -149,9 +149,8 @@ class Dashboard extends Component {
                 <Panel>
                     <Tabs defaultActiveKey={this.state.defaultActiveKey} animation={true} id="noanim-tab-example">
                         <Tab eventKey={1} title="Recipes">
-                            <h3>My recipes</h3>
-                            <a href="/add_recipe" className="btn btn-success pull-right"> Add Recipe</a><br/>
-                            <hr/>
+                            <h3>My recipes <a href="/add_recipe" className="btn btn-success pull-right"> Add Recipe</a></h3>
+                            
                             <center><span className="label label-success"></span></center>
                             <Table striped bordered condensed hover responsive>
                                 <tbody>
@@ -174,9 +173,7 @@ class Dashboard extends Component {
                             </Table>
                         </Tab>
                         <Tab eventKey={2} title="Categories">
-                            <h3>My Categories</h3>
-                            <a href="/add_category" className="btn btn-success pull-right"> Add Category</a><br/>
-                            <hr/>
+                            <h3>My Categories <a href="/add_category" className="btn btn-success pull-right"> Add Category</a><br/></h3>
                             <center><span className="label label-success"></span></center>
                             <Table striped bordered condensed hover responsive>
                                 <tbody>
