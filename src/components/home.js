@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
 import Since from 'react-since';
-import renderHTML from 'react-render-html';
 import url from './config'
 
 const Recipe = props =>
-<div className="col-sm-12">
     <div className="jumbotron">
         <h3>{props.title}</h3>
         <em>Added by <span className="fa fa-user"></span> { props.created_by } about <span className="fa fa-calendar"></span> <Since date={ props.create_date } /> | Category: { props.category}
-        <a href={'/recipe/' + props.recipe_id} className="btn btn-success pull-right">Review</a>
+        <a href={'/recipe/' + props.recipe_id} className="btn btn-primary pull-right">Review</a>
         </em>
 
         <hr/>
         <div>
             <h3>Ingredients</h3>
-            {props.ingredients}
+            <small>{props.ingredients}</small>
             <h3>Steps</h3>
-            <small>{renderHTML(props.steps)}</small><br/><br/>
+            <small>{props.steps}</small><br/><br/>
             <div className="btn-group">
                 {/* <button type="button" className="btn btn-default btn-xs"><span className="fa fa-comment-o"></span> Reviews:{props.reviews}</button> */}
                 <button type="button" className="btn btn-default btn-xs"><span className="fa fa-thumbs-o-up"></span> Upvotes:{props.upvotes}</button>
             </div>
         </div>
-    </div>
-</div>;
+    </div>;
 
 class Home extends Component {
     constructor(){
@@ -38,7 +35,8 @@ class Home extends Component {
             previous_page:'', 
             disablePrevious:'', 
             disableNext:'',
-            url: url+'?page=1'
+            url: url+'?page=1',
+            pages:null
         };
       }
 
@@ -50,7 +48,8 @@ class Home extends Component {
             console.log(findresponse)
             this.setState({
             data: findresponse.Recipe_list,
-            showMessage:false
+            showMessage:false,
+            pages: findresponse.total_pages
             });
         }
         if(findresponse.previous_page === 'Null'){
@@ -93,7 +92,8 @@ class Home extends Component {
                 console.log(findresponse)
                 this.setState({
                 data: findresponse.Recipe_list,
-                showMessage:false
+                showMessage:false,
+                page:this.state.next_page[this.state.next_page.length -1]
                 });
             }
             if(findresponse.previous_page === 'Null'){
@@ -105,7 +105,8 @@ class Home extends Component {
             }else{
                 this.setState({
                     previous_page: findresponse.previous_page,
-                    disablePrevious: 'page-item'
+                    disablePrevious: 'page-item',
+                    
                     });
             }
             if(findresponse.next_page === 'Null'){
@@ -141,7 +142,9 @@ class Home extends Component {
             if(findresponse.Recipe_list){
                 console.log(findresponse)
                 this.setState({
-                data: findresponse.Recipe_list,showMessage:false
+                    data: findresponse.Recipe_list,
+                    showMessage:false,
+                    page:this.state.previous_page[this.state.previous_page.length -1]
                 });
             }
             if(findresponse.previous_page === 'Null'){
@@ -196,6 +199,10 @@ class Home extends Component {
                 this.setState({
                 data: findresponse.Recipe_list,
                 showMessage:false,
+                disableNext: 'page-item disabled',
+                disablePrevious: 'page-item  disabled',
+                next_page:'',
+                previous_page:''
                 });
             
             }else{
@@ -216,38 +223,43 @@ class Home extends Component {
 
 
     render(){
-        if(this.state.showMessage)return <div className="jumbotron">
-        <p className="lead">No recipes matched your query.</p>
-        <hr className="my-4"/>
-        <p>You can view other people's recipes and upvote the ones you like.</p>
-        <p className="lead">
-            <a className="btn btn-primary btn-lg" href="/" role="button">Go back</a>
-        </p>
-        </div>
+        let loadNavBarContent;
+        if (this.state.showMessage) {
+           loadNavBarContent =
+           <div className="Home">
+                <p className="lead">No recipes matched your query.</p>
+            </div>
+        }
         return (
             <div className="Home">
-                <div className="col-sm-6 pull-right">
+                <div className="col-xs-6 pull-right">
                     <div className="input-group mb-2 mb-sm-0">
                         <div className="input-group-addon">Search</div>
-                        <input type="text" className="form-control" onChange={this.handleSearch} placeholder="Enter your search key words here!"/>
+                        <input type="text" className="form-control" onChange={this.handleSearch} onKeyUp={this.handleSearch} placeholder="Enter your search key words here!"/>
                     </div>
-                </div><br/>
-                
-                {this.state.data.map(inf =>
-                <Recipe key={inf.recipe_id} {...inf}/>
-                )}
-                <footer>
-                <div className="col-sm-4 pull-right">
-                <ul className="pagination pagination">
-                    <li className={this.state.disablePrevious}>
-                    <a className="page-link" onClick={() => this.previousPage()}>Previous</a>
-                    </li>
-                    <li className={this.state.disableNext}>
-                    <a className="page-link" onClick={() => this.nextPage()}>Next</a>
-                    </li>
-                </ul>
                 </div>
-                </footer>
+                <div className="col-xs-12">
+                {loadNavBarContent}
+                <hr/>
+                    {this.state.data.map(inf =>
+                    <Recipe key={inf.recipe_id} {...inf}/>
+                    )}
+                </div>
+                <div className="col-xs-3 pull-right">
+                    <ul className="pagination">
+                        <li className={this.state.disablePrevious}>
+                        <a className="page-link" onClick={() => this.previousPage()}>Previous</a>
+                        </li>
+                        <li className={this.state.disableNext}>
+                        <a className="page-link" onClick={() => this.nextPage()}>Next</a>
+                        <a className="page-link">Showing {this.state.page} of {this.state.pages}</a>
+                        </li>
+                        
+                    </ul>
+                    
+                
+                </div>
+                
                 
             </div>
     );
