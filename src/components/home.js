@@ -74,7 +74,7 @@ class Home extends Component {
             }
         })
         .catch((xhr)=>{
-            this.setstate({showMessage:true})
+            this.setState({showMessage:true})
         })
 
     }
