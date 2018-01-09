@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import url from './config'
+import  url, { http } from './config'
 
 const Categories = props =>
     <option>{props.cat_name}</option>
@@ -29,20 +29,15 @@ class AddRecipe extends Component {
     }
     componentDidMount(){
         const {history} = this.props;
+        
         if(!sessionStorage.getItem('isLoggedIn')){
             history.push('/login')
         }
-        fetch(url+'category', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-access-token': sessionStorage.getItem('token'),
-            }
-        }).then((response) => response.json())
-        .then((responseJson) =>{
-            console.log(responseJson.Category_list)
+        return http.get(`${url}category`)
+        .then((response) =>{
+            console.log(response.data.Category_list)
             this.setState({
-                catData: responseJson.Category_list
+                catData: response.data.Category_list
             })
         })
 
@@ -55,38 +50,25 @@ class AddRecipe extends Component {
         if(!sessionStorage.getItem('isLoggedIn')){
             history.push('/login')
         }
-        fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            },
-            body: JSON.stringify({
-              title: this.refs.title.value,
-              category: this.state.category,
-              ingredients: this.refs.ingredients.value,
-              steps: this.refs.steps.value,
-              status: this.state.selectValue
-            })
-        }).then((response) => response.json())
-        .then((responseJson) => {
-            if(responseJson.Message){
-                console.log(responseJson);
-                this.setState ({
-                    message:responseJson.Message
-                })
-            }
-            if (responseJson.status === 201){
-                this.refs.title.value=null;
-                this.refs.ingredients.value=null;
-                this.refs.steps.value=null;
-                history.push('/dashboard')
-            }
-            
-            
+        let postData = {
+            title: this.refs.title.value,
+            category: this.state.category,
+            ingredients: this.refs.ingredients.value,
+            steps: this.refs.steps.value,
+            status: this.state.selectValue
+        }
+        return http.post(`${url}`, postData)
+        .then((response) => {
+            this.refs.title.value=null;
+            this.refs.ingredients.value=null;
+            this.refs.steps.value=null;
+            history.push('/dashboard')
+
         })
-        .catch((error) => {
-          console.error(error);
+        .catch((xhr) => {
+            this.setState ({
+                message:xhr.response.data.Message
+            })
         });
         
         
@@ -96,10 +78,10 @@ class AddRecipe extends Component {
         <div className="AddRecipe">
             <h1>Add Recipe</h1>
             {this.state.message
-                ? <div className="alert alert-danger">{this.state.message}</div>
+                ? <div className="alert alert-danger col-sm-8">{this.state.message}</div>
                 : <div></div> 
             }
-            <div class="jumbotron col-sm-8">
+            <div className="jumbotron col-sm-8">
                 <form onSubmit={this.addRecipe}>
                     <div className="form-group">
                         <input type="text" className="form-control" placeholder="Title" ref="title" required/>
