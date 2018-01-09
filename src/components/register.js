@@ -45,11 +45,11 @@ class Register extends Component {
         <div className="Register">
             <h1>Register Here</h1>
             {this.state.message
-                    ? <div className="alert alert-success col-sm-7">{this.state.message}</div>
+                    ? <div className="alert alert-danger col-xs-12">{this.state.message}</div>
                     : <div></div> 
                 }
             <form onSubmit={this.regUser}>
-                <div className="col-sm-6">
+                <div className="jumbotron">
                     <div className="form-group">
                         <input type="text" className="form-control" placeholder="Name" ref="name" required/>
                     </div>
