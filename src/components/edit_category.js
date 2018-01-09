@@ -86,19 +86,22 @@ class EditCategory extends Component {
         <div className="EditCategory">
             <h1>Edit Category</h1>
             {this.state.message
-                ? <div className="alert alert-success">{this.state.message}</div>
+                ? <div className="alert alert-danger">{this.state.message}</div>
                 : <div></div> 
             }
-            <form onSubmit={this.editCategory}>
-                <div className="form-group">
-                    <input type="text" className="form-control" value={this.state.cat_name} onChange={this.handleCatNameChange} required/>
-                </div>
-                <div className="form-group">
-                    <input type="text" className="form-control" value={this.state.cat_desc} onChange={this.handleCatDescChange} required/>
-                </div>
-                
-                <input type="submit" className="btn btn-primary" value="Submit"/>
-            </form>
+            <div class="jumbotron col-sm-8">
+                <form onSubmit={this.editCategory}>
+                    <div className="form-group">
+                        <input type="text" className="form-control" value={this.state.cat_name} onChange={this.handleCatNameChange} required/>
+                    </div>
+                    <div className="form-group">
+                        <input type="text" className="form-control" value={this.state.cat_desc} onChange={this.handleCatDescChange} required/>
+                    </div>
+                    
+                    <input type="submit" className="btn btn-primary" value="Submit"/>&nbsp;
+                    <a href="/dashboard" className="btn btn-success">Cancel</a>
+                </form>
+            </div>
             
         </div>
         );
