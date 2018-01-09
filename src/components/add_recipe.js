@@ -96,35 +96,38 @@ class AddRecipe extends Component {
         <div className="AddRecipe">
             <h1>Add Recipe</h1>
             {this.state.message
-                ? <div className="alert alert-success">{this.state.message}</div>
+                ? <div className="alert alert-danger">{this.state.message}</div>
                 : <div></div> 
             }
-            <form onSubmit={this.addRecipe}>
-                <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Title" ref="title" required/>
-                </div>
-            <div className="form-group">
-                <select className="form-control" onChange={this.handleCategory}>
-                <option disabled selected>Select Category</option>
-                    {this.state.catData.map(inf =>
-                    <Categories key={inf.cat_id}{...inf}/>
-                    )}
-                </select>
+            <div class="jumbotron col-sm-8">
+                <form onSubmit={this.addRecipe}>
+                    <div className="form-group">
+                        <input type="text" className="form-control" placeholder="Title" ref="title" required/>
+                    </div>
+                    <div className="form-group">
+                        <select className="form-control" onChange={this.handleCategory}>
+                        <option disabled selected>Select Category</option>
+                            {this.state.catData.map(inf =>
+                            <Categories key={inf.cat_id}{...inf}/>
+                            )}
+                        </select>
+                    </div>
+                    
+                    <div className="form-group">
+                        <input type="text" className="form-control" placeholder="Ingredients" ref="ingredients" required/>
+                    </div>
+                    <div className="form-group">
+                        <textarea className="form-control" placeholder="Add your steps here" ref="steps" required/>
+                    </div>
+                    <select onChange={this.handleStatus} required>
+                        <option disabled selected>Select status</option>
+                        <option value="public">Public</option>
+                        <option value="private">Private</option>
+                    </select> <ess>* required</ess><br/><br/>
+                    <input type="submit" className="btn btn-primary" value="Submit"/>&nbsp;
+                    <a href="/dashboard" className="btn btn-success">Cancel</a>
+                </form>
             </div>
-                
-                <div className="form-group">
-                    <input type="text" className="form-control" placeholder="Ingredients" ref="ingredients" required/>
-                </div>
-                <div className="form-group">
-                    <textarea className="form-control" placeholder="Add your steps here" ref="steps" required/>
-                </div>
-                <select onChange={this.handleStatus} required>
-                    <option disabled selected>Select status</option>
-                    <option value="public">Public</option>
-                    <option value="private">Private</option>
-                </select> * required<br/><br/>
-                <input type="submit" className="btn btn-primary" value="Submit"/>
-            </form>
             
         </div>
         );
