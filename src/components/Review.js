@@ -139,7 +139,7 @@ class Review extends Component {
             </div>
         }
         return (
-            <div className="col-sm-12">
+            <div className="Review">
                 {this.state.message
                     ? <div className="alert alert-danger">{this.state.message}</div>
                     : <div></div> 
@@ -159,7 +159,7 @@ class Review extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="jumbotron">
+                <div className="jumbotron review">
                 <b>Reviews</b>
                     {loadReviews}
                     <form onSubmit={this.review}>
