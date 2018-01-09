@@ -28,7 +28,7 @@ class Home extends Component {
         super();
         this.state = {
             data:[],
-            showMessage:true, 
+            showMessage:false, 
             q:'', 
             page:1, 
             has_next:false, 
@@ -72,6 +72,9 @@ class Home extends Component {
                     disableNext: 'page-item'
                     });
             }
+        })
+        .catch((xhr)=>{
+            this.setstate({showMessage:true})
         })
 
     }

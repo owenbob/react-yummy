@@ -30,7 +30,7 @@ class Dashboard extends Component {
         this.state = {
           data:[],
           catData:[], 
-          showMessage:true, 
+          showMessage:false, 
           defaultActiveKey:1
         };
     }
@@ -45,7 +45,12 @@ class Dashboard extends Component {
             this.setState({
                 data: response.data.Recipe_list,
                 showMessage:false
+                
             });   
+            console.log('second')
+        })
+        .catch((xhr) =>{
+            this.setState({showMessage:true})
         })
     }
     componentWillMount(){
@@ -94,8 +99,9 @@ class Dashboard extends Component {
 
     render(){
         if(this.state.showMessage){
+            console.log('first')
         return(
-        <div className="jumbotron">
+        <div className="Dashboard">
         <h3 className="display-3">Hello {sessionStorage.getItem('user')}, you have no recipes at the moment!</h3>
         <p className="lead">We shall help you create,edit and publish your recipes.</p>
         <hr className="my-4"/>
