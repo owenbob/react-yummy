@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, Panel, Table } from 'react-bootstrap';
-import url from './config'
+import  url, { http } from './config'
 
 const Recipe = props =>
     <tr>
@@ -33,88 +33,51 @@ class Dashboard extends Component {
           showMessage:true, 
           defaultActiveKey:1
         };
-      }
+    }
     
     componentDidMount(){
         const { history } = this.props;
         if(!sessionStorage.getItem('isLoggedIn')){
             return history.push('/login')
         }
-        console.log("######get request")
-        fetch(url+'myrecipes', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            }
+        return http.get(`${url}myrecipes`)
+        .then((response)=>{
+            this.setState({
+                data: response.data.Recipe_list,
+                showMessage:false
+            });   
         })
-        .then((Response)=>Response.json())
-        .then((findresponse)=>{
-            if (findresponse.Recipe_list){
-                this.setState({
-                    data: findresponse.Recipe_list,
-                    showMessage:false
-                });
-                console.log(findresponse.Recipe_list)
-            }  
-        })
-        console.log("######get request end")
     }
     componentWillMount(){
-        fetch(url+'category', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-access-token': sessionStorage.getItem('token'),
-            }
-        }).then((response) => response.json())
-        .then((responseJson) =>{
-            console.log(responseJson.Category_list)
+        return http.get(`${url}category`)
+        .then((response) =>{
+            console.log(response.data.Category_list)
             this.setState({
-                catData: responseJson.Category_list
+                catData: response.data.Category_list
             });
         })
 
     }
 
     deleteHandler = (i, e) => {
-        fetch(url+i, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            }
-        })
-        .then((Response)=>Response.json())
-        .then((findresponse)=>{
-            console.log(findresponse.Message);
+        return http.delete(`${url}${i}`)
+        .then((response)=>{
             let data = this.state.data;
             let index =data.findIndex(x =>x.recipe_id === i);
             data.splice(index, 1);
             this.setState({
                 data:data
-            });
-            // window.location.reload()
-            
+            });  
         })
-        .catch(
-            (error) => {
+        .catch((xhr) => {
                 this.props.history.push('/dashboard')
             }
         );
     };
 
     deleteCategoryHandler = (i, e) => {
-        fetch(url+'category/'+i, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            }
-        })
-        .then((Response)=>Response.json())
-        .then((findresponse)=>{
-            console.log(findresponse.message);
+        return http.delete(`${url}category/${i}`)
+        .then((response)=>{
             let catData = this.state.catData;
             let index =catData.findIndex(x =>x.cat_id === i);
             catData.splice(index, 1);
@@ -123,15 +86,14 @@ class Dashboard extends Component {
             });
             
         })
-        .catch(
-            (error) => {
+        .catch((xhr) => {
                 this.props.history.push('/dashboard')
             }
         );
     };
 
     render(){
-        if(false){
+        if(this.state.showMessage){
         return(
         <div className="jumbotron">
         <h3 className="display-3">Hello {sessionStorage.getItem('user')}, you have no recipes at the moment!</h3>
