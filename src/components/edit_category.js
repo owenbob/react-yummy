@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import url from './config'
+import  url, { http } from './config'
 
 class EditCategory extends Component {
     constructor(props){
@@ -29,55 +29,32 @@ class EditCategory extends Component {
         if(!sessionStorage.getItem('isLoggedIn')){
             history.push('/login')
         }
-        fetch(url+'category/'+this.state.cat_id, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            }
-        })
-        .then((Response)=>Response.json())
-        .then((findresponse)=>{
-            if(findresponse.Category_Item){
-                let cat_name = findresponse.Category_Item.cat_name;
-                let cat_desc = findresponse.Category_Item.cat_desc;
-                this.setState ({
-                    cat_name:cat_name,
-                    cat_desc:cat_desc
-                });
-                console.log(findresponse.Category_Item)
-            }
-            
+        return http.get(`${url}category/${this.state.cat_id}`)
+        .then((response)=>{
+            let cat_name = response.data.Category_Item.cat_name;
+            let cat_desc = response.data.Category_Item.cat_desc;
+            this.setState ({
+                cat_name:cat_name,
+                cat_desc:cat_desc
+            });         
         })
     }
 
     editCategory = (e) =>{
         const {history} = this.props;
         e.preventDefault();
-        fetch(url+'category/'+this.state.cat_id, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            },
-            body: JSON.stringify({
-              cat_name: this.state.cat_name,
-              cat_desc: this.state.cat_desc,
-            })
-        }).then((response) => response.json())
-        .then((responseJson) => {
-            if(responseJson){
-                console.log(responseJson);
-                this.setState ({
-                    message:responseJson.Message
-                })
-            }
-            if (responseJson.status === 201){
-                history.push('/dashboard')
-            }
+        let postData = {
+            cat_name: this.state.cat_name,
+            cat_desc: this.state.cat_desc,
+        }
+        return http.put(`${url}category/${this.state.cat_id}`, postData)
+        .then((response) => {  
+            history.push('/dashboard')
         })
-        .catch((error) => {
-          console.error(error);
+        .catch((xhr) => {
+            this.setState ({
+                message:xhr.response.data.Message
+            })
         });
         
     }
