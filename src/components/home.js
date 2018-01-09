@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'; 
 import Since from 'react-since';
-import url from './config'
+import  url, { http } from './config'
+
 
 const Recipe = props =>
     <div className="jumbotron">
@@ -15,10 +16,10 @@ const Recipe = props =>
             <small>{props.ingredients}</small>
             <h3>Steps</h3>
             <small>{props.steps}</small><br/><br/>
-            <div className="btn-group">
+            {/* <div className="btn-group">
                 {/* <button type="button" className="btn btn-default btn-xs"><span className="fa fa-comment-o"></span> Reviews:{props.reviews}</button> */}
-                <button type="button" className="btn btn-default btn-xs"><span className="fa fa-thumbs-o-up"></span> Upvotes:{props.upvotes}</button>
-            </div>
+                {/* <button type="button" className="btn btn-default btn-xs"><span className="fa fa-thumbs-o-up"></span> Upvotes:{props.upvotes}</button>
+            </div> */} */}
         </div>
     </div>;
 
@@ -41,132 +42,112 @@ class Home extends Component {
       }
 
     componentDidMount(){
-    fetch(this.state.url)
-    .then((Response)=>Response.json())
-    .then((findresponse)=>{
-        if(findresponse.Recipe_list){
-            console.log(findresponse)
+        return http.get(this.state.url)
+        .then((response)=>{
+            console.log(response)
             this.setState({
-            data: findresponse.Recipe_list,
+            data: response.data.Recipe_list,
             showMessage:false,
-            pages: findresponse.total_pages
+            pages: response.data.total_pages
             });
-        }
-        if(findresponse.previous_page === 'Null'){
-            // console.log(findresponse.previous_page)
-            this.setState({
-                disablePrevious: 'page-item disabled',
-                previous_page: ''
-                });
-        }else{
-            this.setState({
-                previous_page: findresponse.previous_page,
-                disablePrevious: 'page-item'
-                });
-        }
-        if(findresponse.next_page === 'Null'){
-            this.setState({
-                disableNext: 'page-item disabled',
-                next_page: '',
-                });
-        }else{
-            this.setState({
-                next_page: findresponse.next_page,
-                disableNext: 'page-item'
-                });
-        }
-    })
-
-    }
-    nextPage() {
-        fetch(this.state.next_page, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            }
-        })
-        .then((Response)=>Response.json())
-        .then((findresponse)=>{
-            if(findresponse.Recipe_list){
-                console.log(findresponse)
-                this.setState({
-                data: findresponse.Recipe_list,
-                showMessage:false,
-                page:this.state.next_page[this.state.next_page.length -1]
-                });
-            }
-            if(findresponse.previous_page === 'Null'){
-                // console.log(findresponse.previous_page)
+            if(response.data.previous_page === 'Null'){
                 this.setState({
                     disablePrevious: 'page-item disabled',
                     previous_page: ''
                     });
             }else{
                 this.setState({
-                    previous_page: findresponse.previous_page,
-                    disablePrevious: 'page-item',
-                    
+                    previous_page: response.data.previous_page,
+                    disablePrevious: 'page-item'
                     });
             }
-            if(findresponse.next_page === 'Null'){
+            if(response.data.next_page === 'Null'){
                 this.setState({
                     disableNext: 'page-item disabled',
                     next_page: '',
                     });
             }else{
                 this.setState({
-                    next_page: findresponse.next_page,
+                    next_page: response.data.next_page,
+                    disableNext: 'page-item'
+                    });
+            }
+        })
+
+    }
+    nextPage() {
+        if (this.state.next_page)
+            return http.get(this.state.next_page)
+        .then((response)=>{
+            if(response.data.Recipe_list){
+                this.setState({
+                data: response.data.Recipe_list,
+                showMessage:false,
+                page:this.state.next_page[this.state.next_page.length -1]
+                });
+            }
+            if(response.data.previous_page === 'Null'){
+                this.setState({
+                    disablePrevious: 'page-item disabled',
+                    previous_page: ''
+                    });
+            }else{
+                this.setState({
+                    previous_page: response.data.previous_page,
+                    disablePrevious: 'page-item',
+                    
+                    });
+            }
+            if(response.data.next_page === 'Null'){
+                this.setState({
+                    disableNext: 'page-item disabled',
+                    next_page: '',
+                    });
+            }else{
+                this.setState({
+                    next_page: response.data.next_page,
                     disableNext: 'page-item'
                     });
             }
             
         })
         .catch(
-            (error) => {
-                console.log(error)
+            (xhr) => {
+                console.log(xhr)
             }
         );
     };
 
     previousPage() {
-        fetch(this.state.previous_page, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            }
-        })
-        .then((Response)=>Response.json())
-        .then((findresponse)=>{
-            if(findresponse.Recipe_list){
-                console.log(findresponse)
+        if(this.state.previous_page)
+            return http.get(this.state.previous_page)
+        .then((response)=>{
+            if(response.data.Recipe_list){
                 this.setState({
-                    data: findresponse.Recipe_list,
+                    data: response.data.Recipe_list,
                     showMessage:false,
                     page:this.state.previous_page[this.state.previous_page.length -1]
                 });
             }
-            if(findresponse.previous_page === 'Null'){
-                // console.log(findresponse.previous_page)
+            if(response.data.previous_page === 'Null'){
                 this.setState({
                     disablePrevious: 'page-item disabled',
                     previous_page: ''
                     });
             }else{
                 this.setState({
-                    previous_page: findresponse.previous_page,
+                    previous_page: response.data.previous_page,
                     disablePrevious: 'page-item'
                     });
             }
-            if(findresponse.next_page === 'Null'){
+            if(response.data.next_page === 'Null'){
                 this.setState({
                     disableNext: 'page-item disabled',
                     next_page: '',
                     });
             }else{
                 this.setState({
-                    next_page: findresponse.next_page,
+                    next_page: response.data.next_page,
                     disableNext: 'page-item'
                     });
             }
@@ -184,44 +165,25 @@ class Home extends Component {
         this.setState({
             q: event.target.value
         });
-        let localurl = url+'?q='+this.state.q
-        fetch(localurl, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            }
+        let localurl = url +'?q='+this.state.q
+        return http.get(localurl)
+        .then((response)=>{
+            this.setState({
+            data: response.data.Recipe_list,
+            showMessage:false,
+            disableNext: 'page-item disabled',
+            disablePrevious: 'page-item  disabled',
+            next_page:'',
+            previous_page:''
+            });
         })
-        .then((Response)=>Response.json())
-        .then((findresponse)=>{
-            if(findresponse.Recipe_list){
-                console.log(findresponse)
-                this.setState({
-                data: findresponse.Recipe_list,
-                showMessage:false,
-                disableNext: 'page-item disabled',
-                disablePrevious: 'page-item  disabled',
-                next_page:'',
-                previous_page:''
-                });
-            
-            }else{
-                this.setState({
-                    showMessage:true
-                    });
+        .catch((xhr) => {
+            this.setState({
+                showMessage:true
+            });
             }
-        })
-        .catch(
-            (error) => {
-                this.props.history.push(this.state.url)
-            }
-        );
-
-        
+        );  
     };
-
-
-
     render(){
         let loadNavBarContent;
         if (this.state.showMessage) {
@@ -256,11 +218,7 @@ class Home extends Component {
                         </li>
                         
                     </ul>
-                    
-                
-                </div>
-                
-                
+                </div> 
             </div>
     );
     }
