@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import url from './config'
+import  url, { http } from './config'
 
 const Categories = props =>
     <option>{props.cat_name}</option>
@@ -58,42 +58,25 @@ class EditRecipe extends Component {
         if(!sessionStorage.getItem('isLoggedIn')){
             history.push('/login')
         }
-        fetch(url+this.state.recipe_id, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            }
+        http.get(`${url}${this.state.recipe_id}`)
+        .then((response)=>{
+            let title = response.data.Recipe_Item.title;
+            let category = response.data.Recipe_Item.category;
+            let ingredients = response.data.Recipe_Item.ingredients;
+            let steps = response.data.Recipe_Item.steps;
+            this.setState ({
+                title:title,
+                category:category,
+                ingredients:ingredients,
+                steps:steps
+            })
+            console.log(response.data.Recipe_Item)   
         })
-        .then((Response)=>Response.json())
-        .then((findresponse)=>{
-            if(findresponse.Recipe_Item){
-                let title = findresponse.Recipe_Item.title;
-                let category = findresponse.Recipe_Item.category;
-                let ingredients = findresponse.Recipe_Item.ingredients;
-                let steps = findresponse.Recipe_Item.steps;
-                this.setState ({
-                    title:title,
-                    category:category,
-                    ingredients:ingredients,
-                    steps:steps
-                })
-                console.log(findresponse.Recipe_Item)
-            }
-            
-        })
-
-        fetch(url+'category', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-access-token': sessionStorage.getItem('token'),
-            }
-        }).then((response) => response.json())
-        .then((responseJson) =>{
-            console.log(responseJson.Category_list)
+        http.get(`${url}category`)
+        .then((response) =>{
+            console.log(response.data.Category_list)
             this.setState({
-                catData: responseJson.Category_list
+                catData: response.data.Category_list
             })
         })
 
@@ -103,33 +86,21 @@ class EditRecipe extends Component {
         const {history} = this.props;
         const {title,category}=this.state;
         e.preventDefault();
-        fetch(url+this.state.recipe_id, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            },
-            body: JSON.stringify({
-              title: title,
-              category: category,
-              ingredients: this.state.ingredients,
-              steps: this.state.steps,
-              status: this.state.selectValue
-            })
-        }).then((response) => response.json())
-        .then((responseJson) => {
-            if(responseJson){
-                console.log(responseJson);
-                this.setState ({
-                    message:responseJson.Message
-                })
-            }
-            if (responseJson.status === 201){
+        let postData = {
+            title: title,
+            category: category,
+            ingredients: this.state.ingredients,
+            steps: this.state.steps,
+            status: this.state.selectValue
+        }
+        return http.put(`${url}${this.state.recipe_id}`, postData)
+        .then((response) => {
                 history.push('/dashboard')
-            }
         })
-        .catch((error) => {
-          console.error(error);
+        .catch((xhr) => {
+            this.setState ({
+                message:xhr.response.data.Message
+            })
         });
         
     }
@@ -138,7 +109,7 @@ class EditRecipe extends Component {
         <div className="EditRecipe">
             <h1>Edit Recipe</h1>
             {this.state.message
-                ? <div className="alert alert-danger">{this.state.message}</div>
+                ? <div className="alert alert-danger col-sm-8">{this.state.message}</div>
                 : <div></div> 
             }
             <div class="jumbotron col-sm-8">
