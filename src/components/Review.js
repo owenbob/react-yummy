@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Since from 'react-since';
-import url from './config'
+import  url, { http } from './config'
 
 const Reviews = props =>
 <div className="col-sm-12">
@@ -18,6 +18,7 @@ class Review extends Component {
             recipe_id:recipe_id,
             recipeData:[],
             message:'',
+            color:'alert alert-danger',
             content:'',
             reviews:[],
             placeholder:''
@@ -29,97 +30,72 @@ class Review extends Component {
         if(!sessionStorage.getItem('isLoggedIn')){
             history.push('/login')
         }
-        fetch(url+this.state.recipe_id,{
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-access-token': sessionStorage.getItem('token'),
-            }
-        }).then((response) => response.json())
-        .then((responseJson) =>{
-            if(responseJson.Recipe_Item){
-                this.setState({recipeData: responseJson.Recipe_Item})
-                console.log(responseJson.Recipe_Item)
+        return http.get(`${url+this.state.recipe_id}`)
+        .then((response) =>{
+            if(response.data.Recipe_Item){
+                this.setState({recipeData: response.data.Recipe_Item})
             }
         })
+        .catch(xhr => {
+            console.log(xhr)
+        });  
 
 
     }
 
     componentWillMount(){
-        fetch(url+'recipe/review/'+this.state.recipe_id, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-access-token': sessionStorage.getItem('token'),
-            }
-        }).then((response) => response.json())
-        .then((responseJson) =>{
-            if(responseJson.Review_list){
-            console.log(responseJson.Review_list)
-            this.setState({reviews: responseJson.Review_list})
-            }else{
-            console.log(responseJson.message)
-            this.setState({placeholder: responseJson.message})
-            console.log(this.state.placeholder)
-            }
+        return http.get(`${url}recipe/review/${this.state.recipe_id}`)
+        .then((response) =>{
+            console.log(response.data.Review_list)
+            this.setState({reviews: response.data.Review_list})
         })
-
+        .catch((xhr)=>{
+            this.setState({placeholder: xhr.response.data.message})
+        })
     }
     handleContentChange= (event) =>{
         this.setState({content: event.target.value})
     }
 
     upVote = (id) =>{
-        fetch(url+'recipe/upvote/'+id, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            }
-        })
-        .then((Response)=>Response.json())
-        .then((findresponse)=>{
-            console.log(findresponse.message);
-            if(!findresponse.message){
-                let recipeData = this.state.recipeData;
-                recipeData.upvotes = recipeData.upvotes +1
-                this.setState({recipeData:recipeData});
-            }
-            this.setState({message:findresponse.message});
+        return http.get(`${url}recipe/upvote/${this.state.recipe_id}`)
+        .then((response)=>{
+            let recipeData = this.state.recipeData;
+            recipeData.upvotes = recipeData.upvotes +1
+            this.setState({
+                recipeData:recipeData,
+                color:'alert alert-success',
+                message:response.data.message,
+                
+            });
         })
         .catch(
-            (error) => {
-                this.props.history.push('/recipe/'+id)
+            (xhr) => {
+                this.setState({
+                    color:'alert alert-danger',
+                    message:xhr.response.data.message
+                });
             }
         );
     };
 
     review = (e) =>{
         e.preventDefault();
-        fetch(url+'recipe/review/'+this.state.recipe_id,{
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': sessionStorage.getItem('token'),
-            },
-            body: JSON.stringify({
-              content: this.state.content
+        let postData = {
+            content: this.state.content
+        }
+        return http.post(`${url}recipe/review/${this.state.recipe_id}`, postData)
+        .then((response) => {
+            let reviews = this.state.reviews;
+            reviews.push(response.data.review)
+            this.setState({
+                message:response.data.message,
+                reviews:reviews
             })
-        }).then((response) => response.json())
-        .then((responseJson) => {
-            console.log(responseJson);
-            if(responseJson.status){
-                this.setState({message:responseJson.message})
-                this.refs.content.value=null;
-                window.location.reload()
-
-            }
-            this.setState({message:responseJson.message})
-            
+            this.refs.content.value=null;
         })
-        .catch((error) => {
-          console.error(error);
+        .catch((xhr) => {
+            this.setState({message:xhr.response.data.message})
         });
     }
     render(){
@@ -141,7 +117,7 @@ class Review extends Component {
         return (
             <div className="Review">
                 {this.state.message
-                    ? <div className="alert alert-danger">{this.state.message}</div>
+                    ? <div className={this.state.color}>{this.state.message}</div>
                     : <div></div> 
                 }
                 <div className="jumbotron">
@@ -150,7 +126,7 @@ class Review extends Component {
                     <hr/>
                     <div>
                         <h3>Ingredients</h3>
-                        {this.state.recipeData.ingredients}
+                        <small>{this.state.recipeData.ingredients}</small>
                         <h3>Steps</h3>
                         <small>{this.state.recipeData.steps}</small><br/><br/>
                         <div className="btn-group">
