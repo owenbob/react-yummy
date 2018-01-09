@@ -138,35 +138,38 @@ class EditRecipe extends Component {
         <div className="EditRecipe">
             <h1>Edit Recipe</h1>
             {this.state.message
-                ? <div className="alert alert-success">{this.state.message}</div>
+                ? <div className="alert alert-danger">{this.state.message}</div>
                 : <div></div> 
             }
-            <form onSubmit={this.editRecipe}>
-                <div className="form-group">
-                    <input type="text" className="form-control" value={this.state.title} onChange={this.handleTitleChange} required/>
-                </div>
-                <div className="form-group">
-                    <select className="form-control" onChange={this.handleCategoryChange}>
-                    <option value="Select" disabled selected>Select Category</option>
-                        {this.state.catData.map(inf =>
-                        <Categories key={inf.cat_id}{...inf}/>
-                        )}
-                    </select>
-                </div>
-                <div className="form-group">
-                    <input type="text" className="form-control" value={this.state.ingredients} onChange={this.handleIngredientsChange} required/>
-                </div>
-                <div className="form-group">
-                    <textarea className="form-control" value={this.state.steps} onChange={this.handleStepsChange} required/>
-                </div>
-                <select onChange={this.handleSelect}>
-                    <option value="Select" disabled selected>Select status</option>
-                    {this.state.status.map(inf =>
-                        <Status key={inf.id}{...inf}/>
-                        )}
-                </select><br/><br/>
-                <input type="submit" className="btn btn-primary" value="Submit"/>
-            </form>
+            <div class="jumbotron col-sm-8">
+                <form onSubmit={this.editRecipe}>
+                    <div className="form-group">
+                        <input type="text" className="form-control" value={this.state.title} onChange={this.handleTitleChange} required/>
+                    </div>
+                    <div className="form-group">
+                        <select className="form-control" onChange={this.handleCategoryChange}>
+                        <option value="Select" disabled selected>Select Category</option>
+                            {this.state.catData.map(inf =>
+                            <Categories key={inf.cat_id}{...inf}/>
+                            )}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <input type="text" className="form-control" value={this.state.ingredients} onChange={this.handleIngredientsChange} required/>
+                    </div>
+                    <div className="form-group">
+                        <textarea className="form-control" value={this.state.steps} onChange={this.handleStepsChange} required/>
+                    </div>
+                    <select onChange={this.handleSelect}>
+                        <option value="Select" disabled selected>Select status</option>
+                        {this.state.status.map(inf =>
+                            <Status key={inf.id}{...inf}/>
+                            )}
+                    </select><br/><br/>
+                    <input type="submit" className="btn btn-primary" value="Submit"/>&nbsp;
+                    <a href="/dashboard" className="btn btn-success">Cancel</a>
+                </form>
+            </div>
             
         </div>
         );
