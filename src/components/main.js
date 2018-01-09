@@ -36,15 +36,10 @@ class Main extends Component {
                 <NavDropdown title={'Logged in as '+this.state.user} id="basic-nav-dropdown">
                     <MenuItem eventKey={3.1} href="/dashboard">Dashboard</MenuItem>
                     <MenuItem eventKey={3.2} onClick={this.handlelogout}>Logout</MenuItem>
-                    <MenuItem divider />
                 </NavDropdown>
             </Nav>
         }else {
             loadNavBarContent = 
-            // <Nav pullRight>
-            //     <NavItem eventKey={1} href="/login">Login</NavItem>
-            //     <NavItem eventKey={2} href="/register">Register</NavItem>
-            // </Nav>
             <ul className="nav navbar-nav navbar-right">
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
@@ -53,7 +48,7 @@ class Main extends Component {
         return(
             <Router>
                 <div>
-                    <Navbar inverse collapseOnSelect>
+                    <Navbar inverse collapseOnSelect fixedTop>
                         <Navbar.Header>
                             <Navbar.Brand>
                             <a href="/"><span><img src={require('../static/img/andela.png')} width='24' alt="logo"/></span>
