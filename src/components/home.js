@@ -185,6 +185,22 @@ class Home extends Component {
         );  
     };
     render(){
+        let loadPagination;
+        if (this.state.data) {
+            loadPagination =
+           <div className="col-xs-3 pull-right">
+                <ul className="pagination">
+                    <li className={this.state.disablePrevious}>
+                    <a className="page-link" onClick={() => this.previousPage()}>Previous</a>
+                    </li>
+                    <li className={this.state.disableNext}>
+                    <a className="page-link" onClick={() => this.nextPage()}>Next</a>
+                    <a className="page-link">Showing {this.state.page} of {this.state.pages}</a>
+                    </li>
+                    
+                </ul>
+            </div> 
+        }
         let loadNavBarContent;
         if (this.state.showMessage) {
            loadNavBarContent =
@@ -207,18 +223,7 @@ class Home extends Component {
                     <Recipe key={inf.recipe_id} {...inf}/>
                     )}
                 </div>
-                <div className="col-xs-3 pull-right">
-                    <ul className="pagination">
-                        <li className={this.state.disablePrevious}>
-                        <a className="page-link" onClick={() => this.previousPage()}>Previous</a>
-                        </li>
-                        <li className={this.state.disableNext}>
-                        <a className="page-link" onClick={() => this.nextPage()}>Next</a>
-                        <a className="page-link">Showing {this.state.page} of {this.state.pages}</a>
-                        </li>
-                        
-                    </ul>
-                </div> 
+                {loadPagination}
             </div>
     );
     }
