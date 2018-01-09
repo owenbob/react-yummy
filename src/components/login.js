@@ -27,11 +27,8 @@ class Login extends Component {
             this.refs.username.value = null;
             this.refs.password.value = null;
             this.setState({ message : xhr.response.data.error });
-        });
-      
-       
+        });  
     }
-
     render(){
         return (
             <div className="Login">
