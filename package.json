@@ -6,6 +6,7 @@
     "axios": "^0.17.1",
     "circular-json": "^0.3.3",
     "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.0",
     "expect": "^22.0.3",
     "jest": "^22.0.5",
     "react": "^16.0.0",
