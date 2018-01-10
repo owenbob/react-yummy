@@ -11,7 +11,7 @@ class AddCategory extends Component {
     addCategory = (e) =>{
         e.preventDefault();
         const {history} = this.props;
-        if(!sessionStorage.getItem('isLoggedIn')){
+        if(!localStorage.getItem('isLoggedIn')){
             history.push('/login')
         }
         let postData = {

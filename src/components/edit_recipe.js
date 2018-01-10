@@ -55,7 +55,7 @@ class EditRecipe extends Component {
     }
     componentDidMount(){
         const {history} = this.props;
-        if(!sessionStorage.getItem('isLoggedIn')){
+        if(!localStorage.getItem('isLoggedIn')){
             history.push('/login')
         }
         http.get(`${url}${this.state.recipe_id}`)

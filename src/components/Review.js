@@ -27,7 +27,7 @@ class Review extends Component {
     }
     componentDidMount(){
         const {history} = this.props;
-        if(!sessionStorage.getItem('isLoggedIn')){
+        if(!localStorage.getItem('isLoggedIn')){
             history.push('/login')
         }
         return http.get(`${url+this.state.recipe_id}`)
@@ -136,14 +136,16 @@ class Review extends Component {
                     </div>
                 </div>
                 <div className="jumbotron review">
-                <b>Reviews</b>
+                    <b>Reviews</b>
                     {loadReviews}
                     <form onSubmit={this.review}>
                             <div className="form-group">
                                 <textarea className="form-control" placeholder="Enter your Review!" ref="content" onChange={this.handleContentChange} required/>
                             </div>
-                            <input type="submit" className="btn btn-primary pull-right" value="Review"/>
-                        
+                            <div className="form-group">
+                                <input type="submit" className="btn btn-primary pull-right" value="Review"></input>
+                            </div>
+                            <br/>
                     </form>
                 </div>
             </div>

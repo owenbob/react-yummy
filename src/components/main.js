@@ -18,12 +18,12 @@ class Main extends Component {
     constructor(props){
         super(props)
         this.state = {
-           username:sessionStorage.getItem('isLoggedIn'),
-           user:sessionStorage.getItem('user'),
+           username:localStorage.getItem('isLoggedIn'),
+           user:localStorage.getItem('user'),
           };
     }
     handlelogout = (e) =>{
-        sessionStorage.clear()
+        localStorage.clear()
         this.setState ({username:null})
         window.location.reload()
 

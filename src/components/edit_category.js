@@ -26,7 +26,7 @@ class EditCategory extends Component {
     }
     componentDidMount(){
         const {history} = this.props;
-        if(!sessionStorage.getItem('isLoggedIn')){
+        if(!localStorage.getItem('isLoggedIn')){
             history.push('/login')
         }
         return http.get(`${url}category/${this.state.cat_id}`)

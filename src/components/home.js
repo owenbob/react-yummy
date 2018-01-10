@@ -191,7 +191,7 @@ class Home extends Component {
         let loadPagination;
         if (this.state.data[0]) {
             loadPagination =
-           <div className="col-xs-3 pull-right">
+           <div className="col-xs-11 col-sm-3 pull-right">
                 <ul className="pagination">
                     <li className={this.state.disablePrevious}>
                     <a className="page-link" onClick={() => this.previousPage()}>Previous</a>
@@ -213,7 +213,7 @@ class Home extends Component {
         }
         return (
             <div className="Home">
-                <div className="col-xs-6 pull-right">
+                <div className="col-xs-12 col-sm-6 pull-right">
                     <div className="input-group mb-2 mb-sm-0">
                         <div className="input-group-addon">Search</div>
                         <input type="text" className="form-control" onChange={this.handleSearch} onKeyUp={this.handleSearch} placeholder="Enter your search key words here!"/>

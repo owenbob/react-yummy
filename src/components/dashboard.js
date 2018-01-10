@@ -37,7 +37,7 @@ class Dashboard extends Component {
     
     componentDidMount(){
         const { history } = this.props;
-        if(!sessionStorage.getItem('isLoggedIn')){
+        if(!localStorage.getItem('isLoggedIn')){
             return history.push('/login')
         }
         return http.get(`${url}myrecipes`)
@@ -65,6 +65,7 @@ class Dashboard extends Component {
     }
 
     deleteHandler = (i, e) => {
+        const { history } = this.props;
         return http.delete(`${url}${i}`)
         .then((response)=>{
             let data = this.state.data;
@@ -75,12 +76,13 @@ class Dashboard extends Component {
             });  
         })
         .catch((xhr) => {
-                this.props.history.push('/dashboard')
+                history.push('/dashboard')
             }
         );
     };
 
     deleteCategoryHandler = (i, e) => {
+        const { history } = this.props;
         return http.delete(`${url}category/${i}`)
         .then((response)=>{
             let catData = this.state.catData;
@@ -92,7 +94,7 @@ class Dashboard extends Component {
             
         })
         .catch((xhr) => {
-                this.props.history.push('/dashboard')
+                history.push('/dashboard')
             }
         );
     };
@@ -102,7 +104,7 @@ class Dashboard extends Component {
             console.log('first')
         return(
         <div className="Dashboard">
-        <h3 className="display-3">Hello {sessionStorage.getItem('user')}, you have no recipes at the moment!</h3>
+        <h3 className="display-3">Hello {localStorage.getItem('user')}, you have no recipes at the moment!</h3>
         <p className="lead">We shall help you create,edit and publish your recipes.</p>
         <hr className="my-4"/>
         <p>You can view other people's recipes and upvote the ones you like.</p>

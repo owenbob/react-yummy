@@ -43,7 +43,7 @@ class Register extends Component {
                 : <div></div> 
             }
             <form onSubmit={this.regUser}>
-                <div className="jumbotron">
+                <div className="jumbotron col-xs-11">
                     <div className="form-group">
                         <input type="text" className="form-control" placeholder="Name" ref="name" required/>
                     </div>

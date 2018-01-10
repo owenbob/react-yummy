@@ -17,11 +17,12 @@ class Login extends Component {
         };
         return axios.post(`${url}auth/login`, postData)
         .then(response => {
-            sessionStorage.setItem('token',response.data.token)
-            sessionStorage.setItem('isLoggedIn',true)
-            sessionStorage.setItem('user', this.refs.username.value)
+            localStorage.setItem('token',response.data.token)
+            localStorage.setItem('isLoggedIn',true)
+            localStorage.setItem('user', this.refs.username.value)
             window.location.reload()
             history.push('/dashboard')
+            
         })
         .catch(xhr => {
             this.refs.username.value = null;
@@ -37,7 +38,7 @@ class Login extends Component {
                     ? <div className="alert alert-danger col-xs-12">{this.state.message}</div>
                     : <div></div> 
                 }
-                <div className="jumbotron">
+                <div className="jumbotron col-xs-11">
                     <form method="POST" onSubmit={this.loginUser}>
                         <div className="form-group">
                             <input type="text" className="form-control" placeholder="Username" ref="username" required/>
