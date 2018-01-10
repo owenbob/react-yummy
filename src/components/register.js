@@ -7,28 +7,73 @@ class Register extends Component {
         super()
         this.state={
             message:'',
-            color:'col-xs-12 alert alert-danger'
+            name:'',
+            username:'',
+            email:'',
+            passwordCandidate:'',
+            password:'',
+            color:'col-xs-11 alert alert-danger'
         }
+    }
+    handleNameChange = (event) =>{
+        this.setState({
+            name: event.target.value
+        })
+    }
+
+    handleUsernameChange = (event) =>{
+        this.setState({
+            username: event.target.value
+        })
+    }
+
+    handleEmailChange = (event) =>{
+        this.setState({
+            email: event.target.value
+        })
+    }
+
+    handlePasswordCandidateChange = (event) =>{
+        this.setState({
+            passwordCandidate: event.target.value
+        })
+    }
+
+    handlePasswordChange = (event) =>{
+        this.setState({
+            password: event.target.value
+        })
     }
     regUser = (e) =>{
         e.preventDefault();
+        this.setState({
+            message: '',
+        })
+        if(this.state.passwordCandidate !== this.state.password){
+            return this.setState({
+                message: 'Passwords do not match',
+                color:'col-xs-11 alert alert-danger'
+            })
+        }
         let postData = {
-            name: this.refs.name.value,
-            username: this.refs.username.value,
-            email: this.refs.email.value,
-            password: this.refs.password.value
+            name: this.state.name,
+            username: this.state.username,
+            email: this.state.email,
+            password: this.state.password
         };
         return axios.post(`${url}auth/register`, postData)
         .then((response) => {
             this.setState({
                 message:response.data.Message,
-                color:'col-xs-12 alert alert-success'
+                color:'col-xs-11 alert alert-success'
             })
-            this.refs.name.value=null;
-            this.refs.username.value=null;
-            this.refs.email.value=null;
-            this.refs.password.value=null;
-            this.refs.cpassword.value=null;
+            this.setState({
+                name:'',
+                username:'',
+                email:'',
+                password:'',
+                passwordCandidate:''    
+            })
         })
         .catch((xhr) => {
             this.setState({message:xhr.response.data.Message})
@@ -42,22 +87,22 @@ class Register extends Component {
                 ? <div className={this.state.color}>{this.state.message}</div>
                 : <div></div> 
             }
-            <form onSubmit={this.regUser}>
+            <form id="signup-form" onSubmit={this.regUser}>
                 <div className="jumbotron col-xs-11">
                     <div className="form-group">
-                        <input type="text" className="form-control" placeholder="Name" ref="name" required/>
+                        <input type="text" className="form-control" placeholder="Name" value={this.state.name} onChange={this.handleNameChange} id="name" required/>
                     </div>
                     <div className="form-group">
-                        <input type="text" className="form-control" placeholder="Username" ref="username" required/>
+                        <input type="text" className="form-control" placeholder="Username" value={this.state.username} onChange={this.handleUsernameChange} id="username" required/>
                     </div>
                     <div className="form-group">
-                        <input type="email" className="form-control" placeholder="Email" ref="email" required/>
+                        <input type="email" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} id="email" required/>
                     </div>
                     <div className="form-group">
-                        <input type="password" className="form-control" placeholder="Password" ref="password" required/>
+                        <input type="password" className="form-control" placeholder="Password" value={this.state.passwordCandidate} onChange={this.handlePasswordCandidateChange} id="cpassword" required/>
                     </div>
                     <div className="form-group">
-                        <input type="password" className="form-control" placeholder="Comfirm Password" ref="cpassword" required/>
+                        <input type="password" className="form-control" placeholder="Comfirm Password" value={this.state.password} onChange={this.handlePasswordChange} id="password" required/>
                     </div>
                     <input type="submit" className="btn btn-primary pull-right" value="Register"/>
 
