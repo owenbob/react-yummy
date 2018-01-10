@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { shallow, mount } from 'enzyme';
-import Review from '../components/review';
+import EditCategory from '../components/edit_category';
 
 it('renders without crashing', () => {
     const props = {
@@ -13,6 +13,5 @@ it('renders without crashing', () => {
         }
     }
     
-    shallow(<Review {...props}/>);
-
+    shallow(<EditCategory {...props}/>);
 });

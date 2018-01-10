@@ -4,5 +4,10 @@ import { shallow, mount } from 'enzyme';
 import AddRecipe from '../components/add_recipe';
 
 it('renders without crashing', () => {
-  shallow(<AddRecipe/>);
+    const props = {
+        history: {
+            push: () => {}
+        }
+    }
+    shallow(<AddRecipe {...props}/>);
 });

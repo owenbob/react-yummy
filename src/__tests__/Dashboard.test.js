@@ -4,5 +4,10 @@ import { shallow, mount } from 'enzyme';
 import Dashboard from '../components/dashboard';
 
 it('renders without crashing', () => {
-  shallow(<Dashboard/>);
+    const props = {
+        history: {
+            push: () => {}
+        }
+    }
+    shallow(<Dashboard {...props}/>);
 });

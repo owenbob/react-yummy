@@ -1,0 +1,319 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`register component make sure the email is valid 1`] = `
+<div
+  className="Register"
+>
+  <h1>
+    Register Here
+  </h1>
+  <div
+    className="col-xs-11 alert alert-danger"
+  >
+    Passwords do not match
+  </div>
+  <form
+    id="signup-form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="jumbotron col-xs-11"
+    >
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="name"
+          onChange={[Function]}
+          placeholder="Name"
+          required={true}
+          type="text"
+          value="asiimwe"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="username"
+          onChange={[Function]}
+          placeholder="Username"
+          required={true}
+          type="text"
+          value="elizei"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="email"
+          onChange={[Function]}
+          placeholder="Email"
+          required={true}
+          type="email"
+          value="geofrocker@gmail.com"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="cpassword"
+          onChange={[Function]}
+          placeholder="Password"
+          required={true}
+          type="password"
+          value="psalmsk"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="password"
+          onChange={[Function]}
+          placeholder="Comfirm Password"
+          required={true}
+          type="password"
+          value="psalms"
+        />
+      </div>
+      <input
+        className="btn btn-primary pull-right"
+        type="submit"
+        value="Register"
+      />
+      <center>
+        <p>
+          or
+        </p>
+        <p>
+          <a
+            href="/login"
+          >
+            Already a member? Click here to login
+          </a>
+        </p>
+      </center>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`register component render the two inputs and hides password 1`] = `
+<div
+  className="Register"
+>
+  <h1>
+    Register Here
+  </h1>
+  <div
+    className="col-xs-11 alert alert-danger"
+  >
+    Passwords do not match
+  </div>
+  <form
+    id="signup-form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="jumbotron col-xs-11"
+    >
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="name"
+          onChange={[Function]}
+          placeholder="Name"
+          required={true}
+          type="text"
+          value="asiimwe"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="username"
+          onChange={[Function]}
+          placeholder="Username"
+          required={true}
+          type="text"
+          value="elizei"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="email"
+          onChange={[Function]}
+          placeholder="Email"
+          required={true}
+          type="email"
+          value="geofrocker2@gmail.com"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="cpassword"
+          onChange={[Function]}
+          placeholder="Password"
+          required={true}
+          type="password"
+          value="psalmsk"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="password"
+          onChange={[Function]}
+          placeholder="Comfirm Password"
+          required={true}
+          type="password"
+          value="psalms"
+        />
+      </div>
+      <input
+        className="btn btn-primary pull-right"
+        type="submit"
+        value="Register"
+      />
+      <center>
+        <p>
+          or
+        </p>
+        <p>
+          <a
+            href="/login"
+          >
+            Already a member? Click here to login
+          </a>
+        </p>
+      </center>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`register component renders the sign up form and submit data 1`] = `
+<div
+  className="Register"
+>
+  <h1>
+    Register Here
+  </h1>
+  <div
+    className="col-xs-11 alert alert-danger"
+  >
+    Passwords do not match
+  </div>
+  <form
+    id="signup-form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="jumbotron col-xs-11"
+    >
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="name"
+          onChange={[Function]}
+          placeholder="Name"
+          required={true}
+          type="text"
+          value="asiimwe"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="username"
+          onChange={[Function]}
+          placeholder="Username"
+          required={true}
+          type="text"
+          value="elizei"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="email"
+          onChange={[Function]}
+          placeholder="Email"
+          required={true}
+          type="email"
+          value="geofrocker2@gmail.com"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="cpassword"
+          onChange={[Function]}
+          placeholder="Password"
+          required={true}
+          type="password"
+          value="psalmsk"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="password"
+          onChange={[Function]}
+          placeholder="Comfirm Password"
+          required={true}
+          type="password"
+          value="psalms"
+        />
+      </div>
+      <input
+        className="btn btn-primary pull-right"
+        type="submit"
+        value="Register"
+      />
+      <center>
+        <p>
+          or
+        </p>
+        <p>
+          <a
+            href="/login"
+          >
+            Already a member? Click here to login
+          </a>
+        </p>
+      </center>
+    </div>
+  </form>
+</div>
+`;
