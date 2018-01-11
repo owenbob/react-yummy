@@ -9,6 +9,7 @@
     "enzyme-to-json": "^3.3.0",
     "expect": "^22.0.3",
     "jest": "^22.0.5",
+    "query-string": "^5.0.1",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.0.0",
