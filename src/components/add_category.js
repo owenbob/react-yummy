@@ -20,7 +20,7 @@ class AddCategory extends Component {
         }
         return http.post(`${url}category`, postData)
         .then((response) => {
-                history.push('/dashboard')   
+                history.push('/dashboard?tab=2')   
         })
         .catch((xhr) => {
             this.setState ({
@@ -47,7 +47,7 @@ class AddCategory extends Component {
                         <input type="text" className="form-control" placeholder="Category description" ref="cat_desc" required/>
                     </div>
                     <input type="submit" className="btn btn-primary" value="Submit"/>&nbsp;
-                    <a href="/dashboard" className="btn btn-success">Cancel</a>
+                    <a href="/dashboard?tab=2" className="btn btn-success">Cancel</a>
                 </form>
             </div>
             

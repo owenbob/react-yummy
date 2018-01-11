@@ -95,7 +95,7 @@ class EditRecipe extends Component {
         }
         return http.put(`${url}${this.state.recipe_id}`, postData)
         .then((response) => {
-                history.push('/dashboard')
+                history.push('/dashboard?tab=1')
         })
         .catch((xhr) => {
             this.setState ({
@@ -112,7 +112,7 @@ class EditRecipe extends Component {
                 ? <div className="alert alert-danger col-sm-8">{this.state.message}</div>
                 : <div></div> 
             }
-            <div class="jumbotron col-sm-8">
+            <div className="jumbotron col-sm-8">
                 <form onSubmit={this.editRecipe}>
                     <div className="form-group">
                         <input type="text" className="form-control" value={this.state.title} onChange={this.handleTitleChange} required/>
@@ -138,7 +138,7 @@ class EditRecipe extends Component {
                             )}
                     </select><br/><br/>
                     <input type="submit" className="btn btn-primary" value="Submit"/>&nbsp;
-                    <a href="/dashboard" className="btn btn-success">Cancel</a>
+                    <a href="/dashboard?tab=1" className="btn btn-success">Cancel</a>
                 </form>
             </div>
             

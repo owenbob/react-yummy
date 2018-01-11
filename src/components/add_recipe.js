@@ -67,7 +67,7 @@ class AddRecipe extends Component {
             this.refs.title.value=null;
             this.refs.ingredients.value=null;
             this.refs.steps.value=null;
-            history.push('/dashboard')
+            history.push('/dashboard?tab=1')
 
         })
         .catch((xhr) => {
@@ -112,7 +112,7 @@ class AddRecipe extends Component {
                         <option value="private">Private</option>
                     </select> <ess>* required</ess><br/><br/>
                     <input type="submit" className="btn btn-primary" value="Submit"/>&nbsp;
-                    <a href="/dashboard" className="btn btn-success">Cancel</a>
+                    <a href="/dashboard?tab=1" className="btn btn-success">Cancel</a>
                 </form>
             </div>
             

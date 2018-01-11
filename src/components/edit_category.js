@@ -49,7 +49,7 @@ class EditCategory extends Component {
         }
         return http.put(`${url}category/${this.state.cat_id}`, postData)
         .then((response) => {  
-            history.push('/dashboard')
+            history.push('/dashboard?tab=2')
         })
         .catch((xhr) => {
             this.setState ({
@@ -76,7 +76,7 @@ class EditCategory extends Component {
                     </div>
                     
                     <input type="submit" className="btn btn-primary" value="Submit"/>&nbsp;
-                    <a href="/dashboard" className="btn btn-success">Cancel</a>
+                    <a href="/dashboard?tab=2" className="btn btn-success">Cancel</a>
                 </form>
             </div>
             

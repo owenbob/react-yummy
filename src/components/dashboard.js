@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, Panel, Table } from 'react-bootstrap';
 import  url, { http } from './config'
+const queryString = require('query-string');
 
 const Recipe = props =>
     <tr>
@@ -35,7 +36,6 @@ class Dashboard extends Component {
           defaultActiveKey:1
         };
     }
-    
     componentDidMount(){
         const { history } = this.props;
         if(!localStorage.getItem('isLoggedIn')){
@@ -45,7 +45,7 @@ class Dashboard extends Component {
         .then((response)=>{
             this.setState({
                 data: response.data.Recipe_list,
-                showRecipeMessage:false
+                showRecipeMessage:false,
                 
             });
         })
@@ -104,6 +104,13 @@ class Dashboard extends Component {
     };
 
     render(){
+        let tab = null
+        const parsed = queryString.parse(this.props.location.search);
+        if(parsed.tab){
+            tab = parseInt(parsed.tab, 10)
+        }else{
+            tab = 1
+        }
         let loadRecipeTabContent;
         if(this.state.showRecipeMessage){
             loadRecipeTabContent =
@@ -170,7 +177,7 @@ class Dashboard extends Component {
         return (
             <div className="Dashboard">
                 <Panel>
-                    <Tabs defaultActiveKey={this.state.defaultActiveKey} animation={true} id="noanim-tab-example">
+                    <Tabs defaultActiveKey={tab} animation={true} id="noanim-tab-example">
                         <Tab eventKey={1} title="Recipes">
                             {loadRecipeTabContent}
                         </Tab>

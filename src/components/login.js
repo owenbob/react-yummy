@@ -31,7 +31,7 @@ class Login extends Component {
         .then((response) => {
             localStorage.setItem('token',response.data.token)
             localStorage.setItem('isLoggedIn',true)
-            localStorage.setItem('user', this.state.username)
+            localStorage.setItem('user', response.data.username)
             window.location.reload()
             history.push('/dashboard')
             
