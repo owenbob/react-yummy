@@ -30,7 +30,8 @@ class Dashboard extends Component {
         this.state = {
           data:[],
           catData:[], 
-          showMessage:false, 
+          showRecipeMessage:false, 
+          showCategoryMessage:false,
           defaultActiveKey:1
         };
     }
@@ -40,17 +41,16 @@ class Dashboard extends Component {
         if(!localStorage.getItem('isLoggedIn')){
             return history.push('/login')
         }
-        return http.get(`${url}myrecipes`)
+        http.get(`${url}myrecipes`)
         .then((response)=>{
             this.setState({
                 data: response.data.Recipe_list,
-                showMessage:false
+                showRecipeMessage:false
                 
-            });   
-            console.log('second')
+            });
         })
         .catch((xhr) =>{
-            this.setState({showMessage:true})
+            this.setState({showRecipeMessage:true})
         })
     }
     componentWillMount(){
@@ -58,8 +58,12 @@ class Dashboard extends Component {
         .then((response) =>{
             console.log(response.data.Category_list)
             this.setState({
-                catData: response.data.Category_list
+                catData: response.data.Category_list,
+                showCategoryMessage:false,
             });
+        })
+        .catch((xhr) =>{
+            this.setState({showCategoryMessage:true})
         })
 
     }
@@ -100,68 +104,78 @@ class Dashboard extends Component {
     };
 
     render(){
-        if(this.state.showMessage){
-            console.log('first')
-        return(
-        <div className="Dashboard">
-        <h3 className="display-3">Hello {localStorage.getItem('user')}, you have no recipes at the moment!</h3>
-        <p className="lead">We shall help you create,edit and publish your recipes.</p>
-        <hr className="my-4"/>
-        <p>You can view other people's recipes and upvote the ones you like.</p>
-        <p className="lead">
-            <a className="btn btn-primary btn-lg" href="/add_recipe" role="button">Create a recipe now</a>
-        </p>
-        </div>
-        )
-    }
+        let loadRecipeTabContent;
+        if(this.state.showRecipeMessage){
+            loadRecipeTabContent =
+            <div>
+                <h3 className="display-3">You have no recipes at the moment! <a href="/add_recipe" className="btn btn-success pull-right"> Add Recipe</a></h3>
+            </div>
+        }else {
+            loadRecipeTabContent =
+            <div>
+                <h3>My recipes <a href="/add_recipe" className="btn btn-success pull-right"> Add Recipe</a></h3>
+                <Table striped bordered condensed hover responsive>
+                    <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Author</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        
+                            {this.state.data.map((inf, index)=>
+                            <Recipe id={index+1} key={inf.recipe_id}{...inf} deleteHandler={this.deleteHandler}/>
+                            )}
+                    
+                    </tbody>
+                </Table>
+            </div>
+        }
+
+        let loadCategoryTabContent;
+        if(this.state.showCategoryMessage){
+            loadCategoryTabContent =
+            <div>
+                <h3 className="display-3">You have no categories at the moment! <a href="/add_category" className="btn btn-success pull-right"> Add Category</a></h3>
+            </div>
+        }else {
+            loadCategoryTabContent =
+            <div>
+                <h3>Categories <a href="/add_category" className="btn btn-success pull-right"> Add Category</a><br/></h3>
+                <center><span className="label label-success"></span></center>
+                <Table striped bordered condensed hover responsive>
+                    <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Author</th>
+                            <th>Date</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        
+                            {this.state.catData.map((inf, index) =>
+                            <Categories category_id={index + 1} key={index + 1}{...inf}  deleteCategoryHandler={this.deleteCategoryHandler}/>
+                            )}
+                    
+                    </tbody>
+                </Table>
+            </div>
+        }
+
         return (
             <div className="Dashboard">
                 <Panel>
                     <Tabs defaultActiveKey={this.state.defaultActiveKey} animation={true} id="noanim-tab-example">
                         <Tab eventKey={1} title="Recipes">
-                            <h3>My recipes <a href="/add_recipe" className="btn btn-success pull-right"> Add Recipe</a></h3>
-                            
-                            <center><span className="label label-success"></span></center>
-                            <Table striped bordered condensed hover responsive>
-                                <tbody>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Title</th>
-                                        <th>Category</th>
-                                        <th>Author</th>
-                                        <th>Status</th>
-                                        <th>Date</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    
-                                        {this.state.data.map((inf, index)=>
-                                        <Recipe id={index+1} key={inf.recipe_id}{...inf} deleteHandler={this.deleteHandler}/>
-                                        )}
-                                
-                                </tbody>
-                            </Table>
+                            {loadRecipeTabContent}
                         </Tab>
                         <Tab eventKey={2} title="Categories">
-                            <h3>My Categories <a href="/add_category" className="btn btn-success pull-right"> Add Category</a><br/></h3>
-                            <center><span className="label label-success"></span></center>
-                            <Table striped bordered condensed hover responsive>
-                                <tbody>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Author</th>
-                                        <th>Date</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                    
-                                        {this.state.catData.map((inf, index) =>
-                                        <Categories category_id={index + 1} key={index + 1}{...inf}  deleteCategoryHandler={this.deleteCategoryHandler}/>
-                                        )}
-                                
-                                </tbody>
-                            </Table>
+                            {loadCategoryTabContent}
                         </Tab>
                     </Tabs>
                 </Panel>

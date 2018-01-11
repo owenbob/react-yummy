@@ -10,7 +10,7 @@ class AddRecipe extends Component {
             catData:[],
             selectValue: '',
             message:'',
-            category:''
+            category:'',
         };  
     }
 
@@ -37,9 +37,14 @@ class AddRecipe extends Component {
         .then((response) =>{
             console.log(response.data.Category_list)
             this.setState({
-                catData: response.data.Category_list
+                catData: response.data.Category_list,
             })
         })
+        .catch((xhr) =>{
+            this.setState({
+                message:'Add atleast one category before creating a recipe'
+            })   
+        });
 
 
     }

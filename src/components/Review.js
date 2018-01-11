@@ -21,7 +21,7 @@ class Review extends Component {
             color:'alert alert-danger',
             content:'',
             reviews:[],
-            placeholder:''
+            placeholder:false
         };
         
     }
@@ -46,11 +46,17 @@ class Review extends Component {
     componentWillMount(){
         return http.get(`${url}recipe/review/${this.state.recipe_id}`)
         .then((response) =>{
-            console.log(response.data.Review_list)
-            this.setState({reviews: response.data.Review_list})
+            console.log(response.data)
+            this.setState({
+                reviews: response.data.Review_list,
+                placeholder:false
+            })
+
         })
         .catch((xhr)=>{
-            this.setState({placeholder: xhr.response.data.message})
+            this.setState({
+                placeholder: true
+            })
         })
     }
     handleContentChange= (event) =>{
@@ -86,24 +92,32 @@ class Review extends Component {
         }
         return http.post(`${url}recipe/review/${this.state.recipe_id}`, postData)
         .then((response) => {
+            console.log(response.data)
             let reviews = this.state.reviews;
             reviews.push(response.data.review)
             this.setState({
+                placeholder:false,
+                recipeData:response.data.Recipe,
                 message:response.data.message,
-                reviews:reviews
+                color:'alert alert-success',
+                reviews:reviews,  
             })
-            this.refs.content.value=null;
+           
+            this.refs.content.value='';
         })
         .catch((xhr) => {
-            this.setState({message:xhr.response.data.message})
+            this.setState({
+                color:'alert alert-danger',
+                message:xhr.response.data.message
+            })
         });
     }
     render(){
         let loadReviews;
-        if (!this.state.reviews) {
+        if (this.state.placeholder) {
             loadReviews = 
             <div>
-                <b>{this.state.placeholder}</b><br/>
+                <p>This recipe has no reviews yet</p><br/>
             </div>
            
         }else {
@@ -132,18 +146,19 @@ class Review extends Component {
                         <div className="btn-group">
                             <button type="button" onClick={() => this.upVote(this.state.recipeData.recipe_id)} className="btn btn-primary btn-xs">UpVote</button>
                             <button type="button" className="btn btn-default btn-xs"><span className="fa fa-thumbs-o-up"></span> Upvotes:{this.state.recipeData.upvotes}</button>
+                            <button type="button" className="btn btn-default btn-xs"><span className="fa fa-comment-o"></span> Reviews:{this.state.recipeData.reviews}</button>
                         </div>
                     </div>
                 </div>
                 <div className="jumbotron review">
-                    <b>Reviews</b>
+                    <p>Reviews</p>
                     {loadReviews}
                     <form onSubmit={this.review}>
                             <div className="form-group">
                                 <textarea className="form-control" placeholder="Enter your Review!" ref="content" onChange={this.handleContentChange} required/>
                             </div>
                             <div className="form-group">
-                                <input type="submit" className="btn btn-primary pull-right" value="Review"></input>
+                                <input type="submit" className="btn btn-primary pull-right" value="Add Review"></input>
                             </div>
                             <br/>
                     </form>

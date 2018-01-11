@@ -35,10 +35,10 @@ class AddCategory extends Component {
         <div className="AddCategory">
             <h1>Add Category</h1>
             {this.state.message
-                ? <div className="alert alert-danger">{this.state.message}</div>
+                ? <div className="alert alert-danger col-sm-8">{this.state.message}</div>
                 : <div></div> 
             }
-            <div class="jumbotron col-sm-8">
+            <div className="jumbotron col-sm-8">
                 <form onSubmit={this.addCategory}>
                     <div className="form-group">
                         <input type="text" className="form-control" placeholder="Category name" ref="cat_name" required/>
