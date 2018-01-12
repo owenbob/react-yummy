@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add recipe component renders the the add review form and submit data 1`] = `
+<div
+  className="Review"
+>
+  <div />
+  <div
+    className="jumbotron"
+  >
+    <h3 />
+    <em>
+      Added by 
+      <span
+        className="fa fa-user"
+      />
+       
+       about 
+      <span
+        className="fa fa-calendar"
+      />
+       
+      <Since
+        live={true}
+      />
+    </em>
+    <hr />
+    <div>
+      <h3>
+        Ingredients
+      </h3>
+      <small />
+      <h3>
+        Steps
+      </h3>
+      <small />
+      <br />
+      <br />
+      <div
+        className="btn-group"
+      >
+        <button
+          className="btn btn-primary btn-xs"
+          onClick={[Function]}
+          type="button"
+        >
+          UpVote
+        </button>
+        <button
+          className="btn btn-default btn-xs"
+          type="button"
+        >
+          <span
+            className="fa fa-thumbs-o-up"
+          />
+           Upvotes:
+        </button>
+        <button
+          className="btn btn-default btn-xs"
+          type="button"
+        >
+          <span
+            className="fa fa-comment-o"
+          />
+           Reviews:
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    className="jumbotron review"
+  >
+    <p>
+      Reviews
+    </p>
+    <div />
+    <form
+      id="review-form"
+      onSubmit={[Function]}
+    >
+      <div
+        className="form-group"
+      >
+        <textarea
+          className="form-control"
+          id="content"
+          onChange={[Function]}
+          placeholder="Enter your Review!"
+          required={true}
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="btn btn-primary pull-right"
+          type="submit"
+          value="Add Review"
+        />
+      </div>
+      <br />
+    </form>
+  </div>
+</div>
+`;

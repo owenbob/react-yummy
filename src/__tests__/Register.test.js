@@ -22,7 +22,7 @@ describe('register component', () => {
         expect(preventDefault).toBeCalled();
     });
 
-    it('render the two inputs and hides password', () =>{
+    it('render the two inputs', () =>{
         expect(wrapper.find("#password")).toHaveLength(1);
         expect(wrapper.find("#cpassword")).toHaveLength(1);
         expect(wrapper.find("#username")).toHaveLength(1);

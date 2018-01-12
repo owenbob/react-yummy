@@ -106,7 +106,7 @@ exports[`register component make sure the email is valid 1`] = `
 </div>
 `;
 
-exports[`register component render the two inputs and hides password 1`] = `
+exports[`register component render the two inputs 1`] = `
 <div
   className="Register"
 >

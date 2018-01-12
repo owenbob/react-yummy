@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`edit category component renders the the edit category form and submit data 1`] = `
+<div
+  className="EditCategory"
+>
+  <h1>
+    Edit Category
+  </h1>
+  <div
+    className="alert alert-danger col-sm-8"
+  />
+  <div
+    className="jumbotron col-sm-8"
+  >
+    <form
+      id="category-form"
+      onSubmit={[Function]}
+    >
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="cat_name"
+          onChange={[Function]}
+          required={true}
+          type="text"
+          value="General"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="cat_desc"
+          onChange={[Function]}
+          required={true}
+          type="text"
+          value="General recipes"
+        />
+      </div>
+      <input
+        className="btn btn-primary"
+        id="submit"
+        type="submit"
+        value="Submit"
+      />
+       
+      <a
+        className="btn btn-success"
+        href="/dashboard?tab=2"
+        id="cancel"
+      >
+        Cancel
+      </a>
+    </form>
+  </div>
+</div>
+`;

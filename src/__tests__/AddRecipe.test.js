@@ -30,7 +30,7 @@ describe('add recipe component', () => {
         expect(preventDefault).toBeCalled();
     });
 
-    it('render the inputs and hides password', () =>{
+    it('render the inputs ', () =>{
         expect(wrapper.find("#title")).toHaveLength(1);
         expect(wrapper.find("#category")).toHaveLength(1);
         expect(wrapper.find("#ingredients")).toHaveLength(1);
