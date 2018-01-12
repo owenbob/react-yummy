@@ -153,9 +153,9 @@ class Review extends Component {
                 <div className="jumbotron review">
                     <p>Reviews</p>
                     {loadReviews}
-                    <form onSubmit={this.review}>
+                    <form onSubmit={this.review} id="review-form">
                             <div className="form-group">
-                                <textarea className="form-control" placeholder="Enter your Review!" ref="content" onChange={this.handleContentChange} required/>
+                                <textarea className="form-control" placeholder="Enter your Review!" id="content" onChange={this.handleContentChange} required/>
                             </div>
                             <div className="form-group">
                                 <input type="submit" className="btn btn-primary pull-right" value="Add Review"></input>

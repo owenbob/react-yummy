@@ -15,7 +15,7 @@ const Recipe = props =>
             <small>{props.ingredients}</small>
             <h3>Steps</h3>
             <small>{props.steps}</small><br/><br/>
-            <div className="btn-group">
+            <div className="btn-group" id="btn-group">
                 <button type="button" className="btn btn-default btn-xs"><span className="fa fa-comment-o"></span> Reviews:{props.reviews}</button>
                 <button type="button" className="btn btn-default btn-xs"><span className="fa fa-thumbs-o-up"></span> Upvotes:{props.upvotes}</button>
             </div>
@@ -206,7 +206,7 @@ class Home extends Component {
         let loadNavBarContent;
         if (this.state.showMessage) {
            loadNavBarContent =
-           <div className="Home jumbotron" id="search">
+           <div className="Home jumbotron" id="search-bar">
                 <h3>No recipes matched your query.</h3>
             </div>
         }
@@ -215,7 +215,7 @@ class Home extends Component {
                 <div className="col-xs-12 col-sm-6 pull-right">
                     <div className="input-group mb-2 mb-sm-0">
                         <div className="input-group-addon">Search</div>
-                        <input type="text" className="form-control" onChange={this.handleSearch} onKeyUp={this.handleSearch} placeholder="Enter your search key words here!"/>
+                        <input type="text" className="form-control" onChange={this.handleSearch} onKeyUp={this.handleSearch} id="search" placeholder="Enter your search key words here!"/>
                     </div>
                 </div>
                 <div className="col-xs-12">
