@@ -13,6 +13,11 @@
 .jumbotron h3,em,small{
     color: aliceblue;
 }
+#search{
+    margin-top: 3px;
+    padding-top: 3px;
+    padding-bottom: 4px;
+}
 .panel{
     background-color: aliceblue;
 }
