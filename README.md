@@ -5,3 +5,22 @@ Yummy recipies is a web app built in python using flask framework
   * A user can register for membership
   * A user can login using his/her credentials
   * A user can add, edit and delete recipes
+### Getting Started
+  #### Prerequisites
+  1. Ensure you have node installed preferably node v5.x 
+  2. Ensure you have npm installed
+  4. Ensure you have git installed
+  
+  ### Setup and Installation
+  1. Navigate to your working directory.
+  2. Navigate to your project directory
+  3. Clone the project via git, using ~$git clone https://github.com/geofrocker/react-yummy.git or download the zipped file from https://github.com/geofrocker/react-yummy
+  4. Install the dependencies using npm install  
+  ### Running the app
+    On your shell, run with the command ~$ npm start
+    
+  ### Running tests
+    Run tests using yarn test -- -u (since snapshots are already in the repo)
+    Run tests using yarn test --coverage (to see the tests coverage)
+    
+
