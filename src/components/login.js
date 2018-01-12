@@ -32,6 +32,7 @@ class Login extends Component {
             localStorage.setItem('token',response.data.token)
             localStorage.setItem('isLoggedIn',true)
             localStorage.setItem('user', response.data.username)
+            console.log(response.data.username)
             window.location.reload()
             history.push('/dashboard')
             

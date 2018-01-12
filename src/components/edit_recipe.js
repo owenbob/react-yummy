@@ -113,12 +113,12 @@ class EditRecipe extends Component {
                 : <div></div> 
             }
             <div className="jumbotron col-sm-8">
-                <form onSubmit={this.editRecipe}>
+                <form onSubmit={this.editRecipe} id="recipe-form">
                     <div className="form-group">
-                        <input type="text" className="form-control" value={this.state.title} onChange={this.handleTitleChange} required/>
+                        <input type="text" className="form-control" value={this.state.title} onChange={this.handleTitleChange} id="title" required/>
                     </div>
                     <div className="form-group">
-                        <select className="form-control" onChange={this.handleCategoryChange}>
+                        <select className="form-control" onChange={this.handleCategoryChange} id="category">
                         <option value="Select" disabled selected>Select Category</option>
                             {this.state.catData.map(inf =>
                             <Categories key={inf.cat_id}{...inf}/>
@@ -126,12 +126,12 @@ class EditRecipe extends Component {
                         </select>
                     </div>
                     <div className="form-group">
-                        <input type="text" className="form-control" value={this.state.ingredients} onChange={this.handleIngredientsChange} required/>
+                        <input type="text" className="form-control" value={this.state.ingredients} id="ingredients" onChange={this.handleIngredientsChange} required/>
                     </div>
                     <div className="form-group">
-                        <textarea className="form-control" value={this.state.steps} onChange={this.handleStepsChange} required/>
+                        <textarea className="form-control" value={this.state.steps} onChange={this.handleStepsChange} id="steps" required/>
                     </div>
-                    <select onChange={this.handleSelect}>
+                    <select onChange={this.handleSelect} id="status">
                         <option value="Select" disabled selected>Select status</option>
                         {this.state.status.map(inf =>
                             <Status key={inf.id}{...inf}/>

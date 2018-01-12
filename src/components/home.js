@@ -206,8 +206,8 @@ class Home extends Component {
         let loadNavBarContent;
         if (this.state.showMessage) {
            loadNavBarContent =
-           <div className="Home">
-                <p className="lead">No recipes matched your query.</p>
+           <div className="Home jumbotron" id="search">
+                <h3>No recipes matched your query.</h3>
             </div>
         }
         return (

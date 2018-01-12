@@ -33,7 +33,8 @@ class Dashboard extends Component {
           catData:[], 
           showRecipeMessage:false, 
           showCategoryMessage:false,
-          defaultActiveKey:1
+          defaultActiveKey:1,
+          message:''
         };
     }
     componentDidMount(){
@@ -95,10 +96,14 @@ class Dashboard extends Component {
             this.setState({
                 catData:catData
             });
+
             
         })
         .catch((xhr) => {
-                history.push('/dashboard')
+                this.setState({
+                    message:xhr.response.data.message
+                });
+                history.push('/dashboard?tab=2')
             }
         );
     };
@@ -152,8 +157,8 @@ class Dashboard extends Component {
         }else {
             loadCategoryTabContent =
             <div>
-                <h3>Categories <a href="/add_category" className="btn btn-success pull-right"> Add Category</a><br/></h3>
-                <center><span className="label label-success"></span></center>
+                <h3>Categories&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><label className="label label-danger">{this.state.message}</label></small><a href="/add_category" className="btn btn-success pull-right"> Add Category</a><br/></h3>
+                
                 <Table striped bordered condensed hover responsive>
                     <tbody>
                         <tr>

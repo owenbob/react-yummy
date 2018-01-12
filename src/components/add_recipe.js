@@ -11,25 +11,44 @@ class AddRecipe extends Component {
             selectValue: '',
             message:'',
             category:'',
+            title:'',
+            ingredients:'',
+            steps:''
         };  
     }
-
-    handleStatus = (e) => {
+    handleTitleChange = (event) =>{
         this.setState({
-            selectValue: e.target.value
+            title: event.target.value
+        });
+    }
+
+    handleIngredientsChange = (event) =>{
+        this.setState({
+            ingredients: event.target.value
+        });
+    }
+
+    handleStepsChange = (event) =>{
+        this.setState({
+            steps: event.target.value
+        });
+    }
+
+    handleStatus = (event) => {
+        this.setState({
+            selectValue: event.target.value
         });
         
     }
 
-    handleCategory = (e) => {
+    handleCategory = (event) => {
         this.setState({
-            category: e.target.value
+            category: event.target.value
         });
         
     }
     componentDidMount(){
         const {history} = this.props;
-        
         if(!localStorage.getItem('isLoggedIn')){
             history.push('/login')
         }
@@ -56,19 +75,15 @@ class AddRecipe extends Component {
             history.push('/login')
         }
         let postData = {
-            title: this.refs.title.value,
+            title: this.state.title,
             category: this.state.category,
-            ingredients: this.refs.ingredients.value,
-            steps: this.refs.steps.value,
+            ingredients: this.state.ingredients,
+            steps: this.state.steps,
             status: this.state.selectValue
         }
         return http.post(`${url}`, postData)
         .then((response) => {
-            this.refs.title.value=null;
-            this.refs.ingredients.value=null;
-            this.refs.steps.value=null;
             history.push('/dashboard?tab=1')
-
         })
         .catch((xhr) => {
             this.setState ({
@@ -87,12 +102,12 @@ class AddRecipe extends Component {
                 : <div></div> 
             }
             <div className="jumbotron col-sm-8">
-                <form onSubmit={this.addRecipe}>
+                <form onSubmit={this.addRecipe} id="recipe-form">
                     <div className="form-group">
-                        <input type="text" className="form-control" placeholder="Title" ref="title" required/>
+                        <input type="text" className="form-control" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" id="title" required/>
                     </div>
                     <div className="form-group">
-                        <select className="form-control" onChange={this.handleCategory}>
+                        <select className="form-control" onChange={this.handleCategory} id="category">
                         <option disabled selected>Select Category</option>
                             {this.state.catData.map(inf =>
                             <Categories key={inf.cat_id}{...inf}/>
@@ -101,12 +116,12 @@ class AddRecipe extends Component {
                     </div>
                     
                     <div className="form-group">
-                        <input type="text" className="form-control" placeholder="Ingredients" ref="ingredients" required/>
+                        <input type="text" className="form-control" placeholder="Ingredients" id="ingredients" value={this.state.ingredients} onChange={this.handleIngredientsChange} required/>
                     </div>
                     <div className="form-group">
-                        <textarea className="form-control" placeholder="Add your steps here" ref="steps" required/>
+                        <textarea className="form-control" placeholder="Add your steps here" id="steps" value={this.state.steps} onChange={this.handleStepsChange} required/>
                     </div>
-                    <select onChange={this.handleStatus} required>
+                    <select onChange={this.handleStatus} id="status" required>
                         <option disabled selected>Select status</option>
                         <option value="public">Public</option>
                         <option value="private">Private</option>
