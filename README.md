@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/geofrocker/react-yummy.svg?branch=master)](https://travis-ci.org/geofrocker/react-yummy)
 # Yummy-Recipes web app without database
 ## Description
 Yummy recipies is a web app built in python using flask framework
