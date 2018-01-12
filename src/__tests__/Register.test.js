@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import Register from '../components/Register';
+import Register from '../components/register';
 
 describe('register component', () => {
     const wrapper = shallow(<Register/>);

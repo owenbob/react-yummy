@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { shallow, mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import Review from '../components/review';
+import Review from '../components/Review';
 
 describe('add recipe component', () => {
     const props = {
