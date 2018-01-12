@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`edit recipe component renders the edit recipe form and submits data 1`] = `
+<div
+  className="EditRecipe"
+>
+  <h1>
+    Edit Recipe
+  </h1>
+  <div />
+  <div
+    className="jumbotron col-sm-8"
+  >
+    <form
+      id="recipe-form"
+      onSubmit={[Function]}
+    >
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="title"
+          onChange={[Function]}
+          required={true}
+          type="text"
+          value="Awesome recipe"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <select
+          className="form-control"
+          id="category"
+          onChange={[Function]}
+        >
+          <option
+            disabled={true}
+            selected={true}
+            value="Select"
+          >
+            Select Category
+          </option>
+        </select>
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="ingredients"
+          onChange={[Function]}
+          required={true}
+          type="text"
+          value="one and two"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <textarea
+          className="form-control"
+          id="steps"
+          onChange={[Function]}
+          required={true}
+          value="one and two"
+        />
+      </div>
+      <select
+        id="status"
+        onChange={[Function]}
+      >
+        <option
+          disabled={true}
+          selected={true}
+          value="Select"
+        >
+          Select status
+        </option>
+      </select>
+      <br />
+      <br />
+      <input
+        className="btn btn-primary"
+        type="submit"
+        value="Submit"
+      />
+       
+      <a
+        className="btn btn-success"
+        href="/dashboard?tab=1"
+      >
+        Cancel
+      </a>
+    </form>
+  </div>
+</div>
+`;

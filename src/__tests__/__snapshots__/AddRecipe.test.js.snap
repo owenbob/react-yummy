@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add recipe component renders the the add recipe form and submit data 1`] = `
+<div
+  className="AddRecipe"
+>
+  <h1>
+    Add Recipe
+  </h1>
+  <div />
+  <div
+    className="jumbotron col-sm-8"
+  >
+    <form
+      id="recipe-form"
+      onSubmit={[Function]}
+    >
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="title"
+          onChange={[Function]}
+          placeholder="Title"
+          required={true}
+          type="text"
+          value="Awesome recipe"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <select
+          className="form-control"
+          id="category"
+          onChange={[Function]}
+        >
+          <option
+            disabled={true}
+            selected={true}
+          >
+            Select Category
+          </option>
+        </select>
+      </div>
+      <div
+        className="form-group"
+      >
+        <input
+          className="form-control"
+          id="ingredients"
+          onChange={[Function]}
+          placeholder="Ingredients"
+          required={true}
+          type="text"
+          value="one and two"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <textarea
+          className="form-control"
+          id="steps"
+          onChange={[Function]}
+          placeholder="Add your steps here"
+          required={true}
+          value="one and two"
+        />
+      </div>
+      <select
+        id="status"
+        onChange={[Function]}
+        required={true}
+      >
+        <option
+          disabled={true}
+          selected={true}
+        >
+          Select status
+        </option>
+        <option
+          value="public"
+        >
+          Public
+        </option>
+        <option
+          value="private"
+        >
+          Private
+        </option>
+      </select>
+       
+      <ess>
+        * required
+      </ess>
+      <br />
+      <br />
+      <input
+        className="btn btn-primary"
+        type="submit"
+        value="Submit"
+      />
+       
+      <a
+        className="btn btn-success"
+        href="/dashboard?tab=1"
+      >
+        Cancel
+      </a>
+    </form>
+  </div>
+</div>
+`;

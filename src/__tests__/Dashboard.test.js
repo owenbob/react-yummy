@@ -7,7 +7,11 @@ it('renders without crashing', () => {
     const props = {
         history: {
             push: () => {}
-        }
+        },
+        location:{
+            search: {}
+        }  
     }
     shallow(<Dashboard {...props}/>);
+    
 });

@@ -8,7 +8,7 @@ it('renders without crashing', () => {
         history: {
             push: () => {}
         },
-        match:{
+        match: {
             params:{}
         }
     }
