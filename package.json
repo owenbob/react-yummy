@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "circular-json": "^0.3.3",
+    "coveralls": "^3.0.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.0",
     "expect": "^22.0.3",
