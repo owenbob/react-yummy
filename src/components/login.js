@@ -42,21 +42,22 @@ class Login extends Component {
         });  
     }
     render(){
+        const {username, password, message}=this.state
         return (
             <div className="Login">
                 <h1>Please sign in</h1>
-                {this.state.message
-                    ? <div className="alert alert-danger col-xs-11">{this.state.message}</div>
+                {message
+                    ? <div className="alert alert-danger col-xs-11">{message}</div>
                     : <div></div> 
                 }
                 <div className="jumbotron col-xs-11">
                     <form method="POST" id="login-form" onSubmit={this.loginUser}>
                         <div className="form-group">
-                            <input type="text" className="form-control" id="username" placeholder="Username" onChange={this.handleUsernameChange} value={this.state.username} required/>
+                            <input type="text" className="form-control" id="username" placeholder="Username" onChange={this.handleUsernameChange} value={username} required/>
                         </div>
                     
                         <div className="form-group">
-                            <input type="password" className="form-control" id="password" placeholder="Password" onChange={this.handlePasswordChange} value={this.state.password} required/>
+                            <input type="password" className="form-control" id="password" placeholder="Password" onChange={this.handlePasswordChange} value={password} required/>
                         </div>
                         
                         <input type="submit" className="btn btn-primary pull-right" value="Login"/>

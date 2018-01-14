@@ -1,0 +1,25 @@
+const initialState = {
+  data: [],
+  catData: [],
+  showRecipeMessage: false,
+  showCategoryMessage: false,
+  showCategorySearchMessage: false,
+  showRecipeSearchMessage: false,
+  defaultActiveKey: 1,
+  message: '',
+  page: 1,
+  has_next: false,
+  next_page: '',
+  previous_page: '',
+  disablePrevious: '',
+  disableNext: '',
+  pages: null,
+  cat_page: 1,
+  cat_has_next: false,
+  cat_next_page: '',
+  cat_previous_page: '',
+  cat_disablePrevious: '',
+  cat_disableNext: '',
+  cat_pages: null
+}
+export default initialState;

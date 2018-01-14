@@ -8,20 +8,20 @@ const Status = props =>
     <option>{props.status}</option>
 
 
-const status =  [{'id':1,'status':'public'},{'id':2,'status':'private'}]
+const statusOptions =  [{'id':1,'status':'public'},{'id':2,'status':'private'}]
 class EditRecipe extends Component {
     constructor(props){
         super(props)
         let recipe_id = this.props.match.params.recipe_id;
         this.state = {recipe_id:recipe_id, 
-            selectValue: '',
+            status: '',
             title:'',
             category:'',
             ingredients:'',
             steps:'',
             message:'',
             catData:[], 
-            status:status
+            
         };
         
     }
@@ -46,10 +46,9 @@ class EditRecipe extends Component {
             steps: event.target.value
         })
     }
-    
-    handleSelect = (e) => {
+    handleSelect = (event) => {
         this.setState({
-            selectValue: e.target.value
+            status: event.target.value
         });
         
     }
@@ -64,17 +63,17 @@ class EditRecipe extends Component {
             let category = response.data.Recipe_Item.category;
             let ingredients = response.data.Recipe_Item.ingredients;
             let steps = response.data.Recipe_Item.steps;
+            let status = response.data.Recipe_Item.status;
             this.setState ({
                 title:title,
                 category:category,
                 ingredients:ingredients,
-                steps:steps
-            })
-            console.log(response.data.Recipe_Item)   
+                steps:steps,
+                status:status
+            })  
         })
         http.get(`${url}category`)
         .then((response) =>{
-            console.log(response.data.Category_list)
             this.setState({
                 catData: response.data.Category_list
             })
@@ -83,15 +82,15 @@ class EditRecipe extends Component {
     }
 
     editRecipe = (e) =>{
-        const {history} = this.props;
-        const {title,category}=this.state;
         e.preventDefault();
+        const {history} = this.props;
+        const {title,category,ingredients,steps,status} = this.state;
         let postData = {
             title: title,
             category: category,
-            ingredients: this.state.ingredients,
-            steps: this.state.steps,
-            status: this.state.selectValue
+            ingredients: ingredients,
+            steps: steps,
+            status: status
         }
         return http.put(`${url}${this.state.recipe_id}`, postData)
         .then((response) => {
@@ -100,42 +99,46 @@ class EditRecipe extends Component {
         .catch((xhr) => {
             this.setState ({
                 message:xhr.response.data.Message
+                
             })
         });
         
     }
     render(){
+        const {message, title, catData, category, status, ingredients, steps}=this.state
         return (
         <div className="EditRecipe">
             <h1>Edit Recipe</h1>
-            {this.state.message
-                ? <div className="alert alert-danger col-sm-8">{this.state.message}</div>
+            {message
+                ? <div className="alert alert-danger col-sm-8">{message}</div>
                 : <div></div> 
             }
             <div className="jumbotron col-sm-8">
                 <form onSubmit={this.editRecipe} id="recipe-form">
                     <div className="form-group">
-                        <input type="text" className="form-control" value={this.state.title} onChange={this.handleTitleChange} id="title" required/>
+                        <input type="text" className="form-control" value={title} onChange={this.handleTitleChange} id="title" required/>
                     </div>
                     <div className="form-group">
                         <select className="form-control" onChange={this.handleCategoryChange} id="category">
-                        <option value="Select" disabled selected>Select Category</option>
-                            {this.state.catData.map(inf =>
+                        <option value={category} selected>{category}</option>
+                        <option value="Select" disabled>Select Category</option>
+                            {catData.map(inf =>
                             <Categories key={inf.cat_id}{...inf}/>
                             )}
                         </select>
                     </div>
                     <div className="form-group">
-                        <input type="text" className="form-control" value={this.state.ingredients} id="ingredients" onChange={this.handleIngredientsChange} required/>
+                        <input type="text" className="form-control" value={ingredients} id="ingredients" onChange={this.handleIngredientsChange} required/>
                     </div>
                     <div className="form-group">
-                        <textarea className="form-control" value={this.state.steps} onChange={this.handleStepsChange} id="steps" required/>
+                        <textarea className="form-control" value={steps} onChange={this.handleStepsChange} id="steps" required/>
                     </div>
                     <select onChange={this.handleSelect} id="status">
-                        <option value="Select" disabled selected>Select status</option>
-                        {this.state.status.map(inf =>
+                        <option value={status} selected>{status}</option>
+                        <option value="Select" disabled>Select status</option>
+                        {statusOptions.map(inf =>
                             <Status key={inf.id}{...inf}/>
-                            )}
+                        )}
                     </select><br/><br/>
                     <input type="submit" className="btn btn-primary" value="Submit"/>&nbsp;
                     <a href="/dashboard?tab=1" className="btn btn-success">Cancel</a>

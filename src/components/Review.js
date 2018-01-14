@@ -108,13 +108,14 @@ class Review extends Component {
         .catch((xhr) => {
             this.setState({
                 color:'alert alert-danger',
-                message:xhr.response.data.message
             })
         });
     }
     render(){
+        const {placeholder, reviews, message, recipeData, color}=this.state
+
         let loadReviews;
-        if (this.state.placeholder) {
+        if (placeholder) {
             loadReviews = 
             <div>
                 <p>This recipe has no reviews yet</p><br/>
@@ -123,7 +124,7 @@ class Review extends Component {
         }else {
             loadReviews =
             <div>
-                {this.state.reviews.map(inf =>
+                {reviews.map(inf =>
                 <Reviews key={inf.review_id} {...inf}/>
                 )}
             </div>
@@ -131,22 +132,22 @@ class Review extends Component {
         return (
             <div className="Review">
                 {this.state.message
-                    ? <div className={this.state.color}>{this.state.message}</div>
+                    ? <div className={color}>{message}</div>
                     : <div></div> 
                 }
                 <div className="jumbotron">
-                    <h3>{this.state.recipeData.title}</h3>
-                    <em>Added by <span className="fa fa-user"></span> { this.state.recipeData.created_by } about <span className="fa fa-calendar"></span> <Since date={ this.state.recipeData.create_date } /></em>
+                    <h3>{recipeData.title}<a href="/" className="btn btn-primary pull-right">Go back</a></h3>
+                    <em>Added by <span className="fa fa-user"></span> { recipeData.created_by } about <span className="fa fa-calendar"></span> <Since date={ recipeData.create_date } /></em>
                     <hr/>
                     <div>
                         <h3>Ingredients</h3>
-                        <small>{this.state.recipeData.ingredients}</small>
+                        <small>{recipeData.ingredients}</small>
                         <h3>Steps</h3>
-                        <small>{this.state.recipeData.steps}</small><br/><br/>
+                        <small>{recipeData.steps}</small><br/><br/>
                         <div className="btn-group">
-                            <button type="button" onClick={() => this.upVote(this.state.recipeData.recipe_id)} className="btn btn-primary btn-xs">UpVote</button>
-                            <button type="button" className="btn btn-default btn-xs"><span className="fa fa-thumbs-o-up"></span> Upvotes:{this.state.recipeData.upvotes}</button>
-                            <button type="button" className="btn btn-default btn-xs"><span className="fa fa-comment-o"></span> Reviews:{this.state.recipeData.reviews}</button>
+                            <button type="button" onClick={() => this.upVote(recipeData.recipe_id)} className="btn btn-primary btn-xs">UpVote</button>
+                            <button type="button" className="btn btn-default btn-xs"><span className="fa fa-thumbs-o-up"></span> Upvotes:{recipeData.upvotes}</button>
+                            <button type="button" className="btn btn-default btn-xs"><span className="fa fa-comment-o"></span> Reviews:{recipeData.reviews}</button>
                         </div>
                     </div>
                 </div>
@@ -155,7 +156,7 @@ class Review extends Component {
                     {loadReviews}
                     <form onSubmit={this.review} id="review-form">
                             <div className="form-group">
-                                <textarea className="form-control" placeholder="Enter your Review!" id="content" onChange={this.handleContentChange} required/>
+                                <textarea className="form-control" placeholder="Enter your Review!" id="content" ref="content" onChange={this.handleContentChange} required/>
                             </div>
                             <div className="form-group">
                                 <input type="submit" className="btn btn-primary pull-right" value="Add Review"></input>

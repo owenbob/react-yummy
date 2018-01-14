@@ -59,20 +59,21 @@ class EditCategory extends Component {
         
     }
     render(){
+        const {message, cat_name, cat_desc}=this.state
         return (
         <div className="EditCategory">
             <h1>Edit Category</h1>
-            {this.state.message
-                ? <div className="alert alert-danger col-sm-8">{this.state.message}</div>
+            {message
+                ? <div className="alert alert-danger col-sm-8">{message}</div>
                 : <div></div> 
             }
             <div className="jumbotron col-sm-8">
                 <form onSubmit={this.editCategory} id="category-form">
                     <div className="form-group">
-                        <input type="text" className="form-control" id="cat_name" value={this.state.cat_name} onChange={this.handleCatNameChange} required/>
+                        <input type="text" className="form-control" id="cat_name" value={cat_name} onChange={this.handleCatNameChange} required/>
                     </div>
                     <div className="form-group">
-                        <input type="text" className="form-control" id="cat_desc" value={this.state.cat_desc} onChange={this.handleCatDescChange} required/>
+                        <input type="text" className="form-control" id="cat_desc" value={cat_desc} onChange={this.handleCatDescChange} required/>
                     </div>
                     
                     <input type="submit" className="btn btn-primary" id="submit" value="Submit"/>&nbsp;

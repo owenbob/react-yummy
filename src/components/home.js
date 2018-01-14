@@ -165,46 +165,70 @@ class Home extends Component {
     handleSearch = (event) => {
         event.preventDefault();
         this.setState({
-            q: event.target.value
+            q: event.target.value,
+            page:1
         });
-        let localurl = url +'?q='+this.state.q
-        return http.get(localurl)
-        .then((response)=>{
-            this.setState({
-            data: response.data.Recipe_list,
-            showMessage:false,
-            disableNext: 'page-item disabled',
-            disablePrevious: 'page-item  disabled',
-            next_page:'',
-            previous_page:''
-            });
-        })
-        .catch((xhr) => {
-            this.setState({
-                showMessage:true
-            });
-            }
-        );  
+        if(this.state.q){
+            let localurl = url +'?q='+this.state.q+'&page='+this.state.page
+            return http.get(localurl)
+            .then((response)=>{
+                this.setState({
+                    data: response.data.Recipe_list,
+                    showMessage:false,
+                    pages: response.data.total_pages
+                });
+                if(response.data.previous_page === 'Null'){
+                    this.setState({
+                        disablePrevious: 'page-item disabled',
+                        previous_page: ''
+                        });
+                }else{
+                    this.setState({
+                        previous_page: response.data.previous_page,
+                        disablePrevious: 'page-item'
+                        });
+                }
+                if(response.data.next_page === 'Null'){
+                    this.setState({
+                        disableNext: 'page-item disabled',
+                        next_page: '',
+                        });
+                }else{
+                    this.setState({
+                        next_page: response.data.next_page,
+                        disableNext: 'page-item'
+                        });
+                }
+            })
+            .catch((xhr) => {
+                this.setState({
+                    showMessage:true,
+                    data:[]
+                });
+                }
+            );
+        } 
     };
     render(){
+        const {data, disableNext, disablePrevious, page, pages, showMessage, }=this.state
         let loadPagination;
-        if (this.state.data[0]) {
+        if (data[0]) {
             loadPagination =
            <div className="col-xs-11 col-sm-3 pull-right">
                 <ul className="pagination">
-                    <li className={this.state.disablePrevious}>
+                    <li className={disablePrevious}>
                     <a className="page-link" onClick={() => this.previousPage()}>Previous</a>
                     </li>
-                    <li className={this.state.disableNext}>
+                    <li className={disableNext}>
                     <a className="page-link" onClick={() => this.nextPage()}>Next</a>
-                    <a className="page-link">Showing {this.state.page} of {this.state.pages}</a>
+                    <a className="page-link">Showing {page} of {pages}</a>
                     </li>
                     
                 </ul>
             </div> 
         }
         let loadNavBarContent;
-        if (this.state.showMessage) {
+        if (showMessage) {
            loadNavBarContent =
            <div className="Home jumbotron" id="search-bar">
                 <h3>No recipes matched your query.</h3>
@@ -221,7 +245,7 @@ class Home extends Component {
                 <div className="col-xs-12">
                 {loadNavBarContent}
                 <hr/>
-                    {this.state.data.map(inf =>
+                    {data.map(inf =>
                     <Recipe key={inf.recipe_id} {...inf}/>
                     )}
                 </div>

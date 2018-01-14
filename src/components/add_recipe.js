@@ -94,32 +94,33 @@ class AddRecipe extends Component {
         
     }
     render(){
+        const {message, title, catData, ingredients, steps}=this.state
         return (
         <div className="AddRecipe">
             <h1>Add Recipe</h1>
-            {this.state.message
-                ? <div className="alert alert-danger col-sm-8">{this.state.message}</div>
+            {message
+                ? <div className="alert alert-danger col-sm-8">{message}<a href="/add_category" className="btn btn-info pull-right"> Add Category</a></div>
                 : <div></div> 
             }
             <div className="jumbotron col-sm-8">
                 <form onSubmit={this.addRecipe} id="recipe-form">
                     <div className="form-group">
-                        <input type="text" className="form-control" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" id="title" required/>
+                        <input type="text" className="form-control" value={title} onChange={this.handleTitleChange} placeholder="Title" id="title" required/>
                     </div>
                     <div className="form-group">
                         <select className="form-control" onChange={this.handleCategory} id="category">
                         <option disabled selected>Select Category</option>
-                            {this.state.catData.map(inf =>
+                            {catData.map(inf =>
                             <Categories key={inf.cat_id}{...inf}/>
                             )}
                         </select>
                     </div>
                     
                     <div className="form-group">
-                        <input type="text" className="form-control" placeholder="Ingredients" id="ingredients" value={this.state.ingredients} onChange={this.handleIngredientsChange} required/>
+                        <input type="text" className="form-control" placeholder="Ingredients" id="ingredients" value={ingredients} onChange={this.handleIngredientsChange} required/>
                     </div>
                     <div className="form-group">
-                        <textarea className="form-control" placeholder="Add your steps here" id="steps" value={this.state.steps} onChange={this.handleStepsChange} required/>
+                        <textarea className="form-control" placeholder="Add your steps here" id="steps" value={steps} onChange={this.handleStepsChange} required/>
                     </div>
                     <select onChange={this.handleStatus} id="status" required>
                         <option disabled selected>Select status</option>
