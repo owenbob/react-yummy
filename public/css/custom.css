@@ -13,15 +13,15 @@
 .jumbotron h3,em,small{
     color: aliceblue;
 }
-#search{
-    margin-top: 3px;
+#search-bar{
+    margin-top: 100px;
     padding-top: 3px;
     padding-bottom: 4px;
 }
 .panel{
     background-color: aliceblue;
 }
-.input-group .form-control{
+#search{
     background-color: rgb(178, 175, 167);
     
 }
@@ -52,3 +52,12 @@ hr{
     width:400px;
     margin:0 auto;
   }
+table{
+    margin-top: 15px;
+}
+#pagination{
+    padding-left: 100px
+}
+#no-recipes{
+    margin-top: 15px;
+}
