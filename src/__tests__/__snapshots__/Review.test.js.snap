@@ -8,7 +8,14 @@ exports[`add recipe component renders the the add review form and submit data 1`
   <div
     className="jumbotron"
   >
-    <h3 />
+    <h3>
+      <a
+        className="btn btn-primary pull-right"
+        href="/"
+      >
+        Go back
+      </a>
+    </h3>
     <em>
       Added by 
       <span

@@ -36,8 +36,13 @@ exports[`edit recipe component renders the edit recipe form and submits data 1`]
           onChange={[Function]}
         >
           <option
-            disabled={true}
             selected={true}
+            value="General"
+          >
+            General
+          </option>
+          <option
+            disabled={true}
             value="Select"
           >
             Select Category
@@ -72,12 +77,25 @@ exports[`edit recipe component renders the edit recipe form and submits data 1`]
         onChange={[Function]}
       >
         <option
-          disabled={true}
           selected={true}
+          value={Array []}
+        />
+        <option
+          disabled={true}
           value="Select"
         >
           Select status
         </option>
+        <Status
+          id={1}
+          key="1"
+          status="public"
+        />
+        <Status
+          id={2}
+          key="2"
+          status="private"
+        />
       </select>
       <br />
       <br />

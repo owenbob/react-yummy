@@ -18,13 +18,13 @@ describe('the dashboard component', () => {
     it('renders the Dashboard class', () => {
         expect(wrapper.find(".Dashboard")).toHaveLength(1);
     });
-    it('renders five div jsx elements', () => {
-        expect(wrapper.find("div")).toHaveLength(3);        
+    it('renders nine div jsx elements', () => {
+        expect(wrapper.find("div")).toHaveLength(9);        
     });
     
     it('renders a no recipes message', () =>{
         wrapper.setState({showRecipeMessage:true});
-        expect(wrapper.find(".display-3")).toHaveLength(1);
+        expect(wrapper.find(".alert")).toHaveLength(1);
         expect(wrapper.find(".btn")).toHaveLength(2);
     });
     it('renders a recipes tab', () =>{
@@ -32,32 +32,10 @@ describe('the dashboard component', () => {
         expect(wrapper.find("a")).toHaveLength(2);
         expect(wrapper.find(".btn")).toHaveLength(2);
         expect(wrapper.find("Table")).toHaveLength(2);
-        
-    });it('renders a no recipes message', () =>{
-        wrapper.setState({showRecipeMessage:true});
-        expect(wrapper.find(".display-3")).toHaveLength(1);
-        expect(wrapper.find(".btn")).toHaveLength(2);
-    });
-    it('renders a recipes tab', () =>{
-        wrapper.setState({showRecipeMessage:false});
-        expect(wrapper.find("a")).toHaveLength(2);
-        expect(wrapper.find(".btn")).toHaveLength(2);
-        expect(wrapper.find("Table")).toHaveLength(2);
-        
-    });it('renders a no recipes message', () =>{
-        wrapper.setState({showRecipeMessage:true});
-        expect(wrapper.find(".display-3")).toHaveLength(1);
-        expect(wrapper.find(".btn")).toHaveLength(2);
-    });
-    it('renders a recipes tab', () =>{
-        wrapper.setState({showRecipeMessage:false});
-        expect(wrapper.find("a")).toHaveLength(2);
-        expect(wrapper.find(".btn")).toHaveLength(2);
-        expect(wrapper.find("Table")).toHaveLength(2);   
     });
     it('renders a no categories message', () =>{
         wrapper.setState({showCategoryMessage:true});
-        expect(wrapper.find(".display-3")).toHaveLength(1);
+        expect(wrapper.find(".alert")).toHaveLength(1);
         expect(wrapper.find(".btn")).toHaveLength(2);
     });
     it('renders a categories tab', () =>{

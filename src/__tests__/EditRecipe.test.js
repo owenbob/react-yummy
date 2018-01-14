@@ -46,7 +46,7 @@ describe('edit recipe component', () => {
     });
 
     it('renders four options jsx elements', () => {
-        expect(wrapper.find("option")).toHaveLength(2);        
+        expect(wrapper.find("option")).toHaveLength(4);        
     });
 
     it('renders two buttons jsx elements', () => {

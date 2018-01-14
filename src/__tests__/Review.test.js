@@ -34,8 +34,8 @@ describe('add recipe component', () => {
         expect(wrapper.find("#content")).toHaveLength(1);
     });
 
-    it('renders two buttons jsx elements', () => {
-        expect(wrapper.find(".btn")).toHaveLength(4);        
+    it('renders five buttons jsx elements', () => {
+        expect(wrapper.find(".btn")).toHaveLength(5);        
     });
     it('renders btn-group class jsx elements', () => {
         expect(wrapper.find(".btn-group")).toHaveLength(1);        
